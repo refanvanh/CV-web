@@ -1,0 +1,192 @@
+{
+  "personal": {
+    "name": "Reza Fadjar Nawawi",
+    "title": "IT Engineer",
+    "description": "Engineer berpengalaman dengan passion menciptakan solusi digital inovatif dan user-friendly, didukung kemampuan problem-solving kuat di bidang software maupun hardware.",
+    "email": "rezafnaw@gmail.com",
+    "phone": "+62 838-9048-5939",
+    "location": "Bandung, Indonesia",
+    "profileImage": "/uploads/default-profile.jpg"
+  },
+  "experience": [
+    {
+      "id": 1,
+      "position": "Full Stack Developer",
+      "company": "Freelance",
+      "period": "2025",
+      "description": "Mengembangkan aplikasi web end-to-end mulai dari perancangan database, implementasi backend, hingga pengembangan antarmuka frontend. Berpengalaman dalam integrasi API, optimasi performa aplikasi, serta memastikan pengalaman pengguna yang responsif dan user-friendly."
+    },
+    {
+      "id": 2,
+      "position": "Data Engineer",
+      "company": "PT Prosa Solusi Cerdas",
+      "period": "2018 - 2025",
+      "description": "Bertanggung jawab dalam merancang, mengelola, dan mengoptimalkan pipeline data untuk mendukung analisis dan pengembangan model AI. Berpengalaman dalam pengolahan data terstruktur maupun tidak terstruktur, serta kolaborasi lintas tim untuk memastikan ketersediaan data yang akurat, bersih, dan terintegrasi."
+    },
+    {
+      "id": 3,
+      "position": "Hardware and Network Engineer",
+      "company": "Freelance",
+      "period": "2015 - 2025",
+      "description": "Menangani instalasi, konfigurasi, dan troubleshooting perangkat keras serta jaringan. Berpengalaman dalam perbaikan komputer/laptop, optimasi sistem, dan pengelolaan jaringan WiFi maupun LAN untuk memastikan kinerja perangkat dan konektivitas yang stabil."
+    }
+  ],
+  "skills": {
+    "frontend": {
+      "name": "Frontend Development",
+      "skills": [
+        {
+          "name": "React",
+          "level": 90
+        },
+        {
+          "name": "Vue.js",
+          "level": 85
+        },
+        {
+          "name": "JavaScript",
+          "level": 95
+        },
+        {
+          "name": "TypeScript",
+          "level": 80
+        },
+        {
+          "name": "HTML5",
+          "level": 95
+        },
+        {
+          "name": "CSS3",
+          "level": 90
+        }
+      ]
+    },
+    "backend": {
+      "name": "Backend Development",
+      "skills": [
+        {
+          "name": "Node.js",
+          "level": 88
+        },
+        {
+          "name": "Python",
+          "level": 97
+        },
+        {
+          "name": "PHP",
+          "level": 70
+        },
+        {
+          "name": "MySQL",
+          "level": 85
+        },
+        {
+          "name": "Express.js",
+          "level": 85
+        }
+      ]
+    },
+    "tools": {
+      "name": "Tools & Technologies",
+      "skills": [
+        {
+          "name": "Git",
+          "level": 90
+        },
+        {
+          "name": "Docker",
+          "level": 84
+        },
+        {
+          "name": "Google Cloud",
+          "level": 80
+        },
+        {
+          "name": "Bash",
+          "level": 92
+        },
+        {
+          "name": "Firebase",
+          "level": 85
+        }
+      ]
+    }
+  },
+  "projects": [
+    {
+      "id": 1,
+      "name": "Platform Booking Mabar Badminton RaketerS",
+      "description": "Membangun platform digital yang memudahkan pemain badminton dalam melakukan booking sesi main bersama (mabar). Proyek ini bertujuan untuk meningkatkan kemudahan koordinasi, keteraturan jadwal, dan pengalaman bermain yang lebih terorganisir bagi komunitas badminton.",
+      "technologies": [
+        "React",
+        "TypeScript",
+        "Node.js",
+        "Express.js",
+        "Google Sheets API",
+        "Google Cloud Service Account",
+        "Firebase Authentication",
+        "ESLint",
+        "Vercel",
+        "Railway",
+        "Docker"
+      ],
+      "liveUrl": "https://raketers.com",
+      "githubUrl": "https://github.com/refanvanh/bookingmabar-web",
+      "image": "/uploads/project1.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Toko Oleh-Oleh Khas Serang Chadel Food",
+      "description": "Mengembangkan platform penjualan produk kuliner khas Serang dengan brand Chadel Food, yang berfokus pada penyediaan oleh-oleh lokal berkualitas. Proyek ini mendukung promosi UMKM daerah, memperluas distribusi produk, serta memberikan pengalaman belanja yang mudah dan modern bagi pelanggan.",
+      "technologies": [
+        "HTML5",
+        "CSS3",
+        "JavaScript"
+      ],
+      "liveUrl": "https://chadelfood.github.io/chadelfood/",
+      "githubUrl": "https://github.com/chadelfood/chadelfood",
+      "image": "/uploads/project2.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Absensi Karyawan",
+      "description": "Membangun sistem absensi digital untuk mencatat kehadiran karyawan secara lebih efisien, akurat, dan mudah diakses. Proyek ini mendukung automasi proses administrasi, pelacakan jam kerja, serta penyusunan laporan kehadiran yang terintegrasi.",
+      "technologies": [
+        "HTML5",
+        "CSS3",
+        "Vanilla JavaScript",
+        "Google Sheets API",
+        "Google Apps Script",
+        "Google Cloud Console"
+      ],
+      "liveUrl": "https://refanvanh.github.io/presensi-web/",
+      "githubUrl": "https://github.com/refanvanh/presensi-web",
+      "image": "/uploads/project3.jpg"
+    }
+  ],
+  "social": {
+    "linkedin": "www.linkedin.com/in/reza-fadjar-nawawi",
+    "github": "https://github.com/refanvanh/",
+    "facebook": "https://www.facebook.com/rezafadjarnawawi",
+    "instagram": "https://www.instagram.com/navaviinside/"
+  },
+  "lastUpdated": "2025-09-17T14:32:16.723Z",
+  "about": {
+    "text1": "Saya seorang IT Engineer dengan keahlian sebagai Full Stack Developer, Data Engineer, Hardware Engineer, dan Network Engineer, serta memiliki pengalaman profesional lebih dari 7 tahun di dunia teknologi. Berpengalaman dalam berbagai teknologi modern dan terus mengembangkan diri dengan mempelajari hal-hal baru.",
+    "text2": "Passion saya adalah menciptakan solusi teknologi yang tidak hanya fungsional, tetapi juga menghadirkan pengalaman pengguna yang optimal. Saya percaya bahwa teknologi terbaik adalah teknologi yang sederhana, efektif, dan mudah digunakan oleh semua orang.",
+    "stats": [
+      {
+        "number": "7+",
+        "label": "Tahun Pengalaman"
+      },
+      {
+        "number": "4",
+        "label": "Proyek Selesai"
+      },
+      {
+        "number": "99+",
+        "label": "Klien Puas"
+      }
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Edit Button</title>
+    <style>
+        .edit-btn {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .edit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Edit Button</h1>
+    
+    <button class="edit-btn" id="editButton">
+        <i class="fas fa-edit"></i> Edit
+    </button>
+    
+    <div id="result"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded');
+            
+            const editButton = document.getElementById('editButton');
+            const result = document.getElementById('result');
+            
+            if (editButton) {
+                console.log('Edit button found:', editButton);
+                
+                editButton.addEventListener('click', function(e) {
+                    console.log('Edit button clicked!');
+                    e.preventDefault();
+                    result.innerHTML = '<p style="color: green;">Edit button berhasil diklik!</p>';
+                });
+                
+                console.log('Event listener added');
+            } else {
+                console.error('Edit button not found!');
+                result.innerHTML = '<p style="color: red;">Edit button tidak ditemukan!</p>';
+            }
+        });
+    </script>
+</body>
+</html>

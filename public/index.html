@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Portofolio - Reza Fadjar Nawawi</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Portofolio</h2>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">Tentang</a>
+                <a href="#experience" class="nav-link">Pengalaman</a>
+                <a href="#skills" class="nav-link">Keahlian</a>
+                <a href="#projects" class="nav-link">Proyek</a>
+                <a href="#contact" class="nav-link">Kontak</a>
+                <button class="edit-btn" id="editButton">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">Halo, Saya <span class="highlight" id="heroName">Reza Fadjar Nawawi</span></h1>
+                    <p class="hero-subtitle" id="heroTitle">Full Stack Developer & UI/UX Designer</p>
+                    <p class="hero-description" id="heroDescription">
+                        Saya seorang developer berpengalaman dengan passion untuk menciptakan 
+                        solusi digital yang inovatif dan user-friendly.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn btn-primary">Hubungi Saya</a>
+                        <a href="#projects" class="btn btn-secondary">Lihat Proyek</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="profile-card">
+                        <img src="/uploads/default-profile.jpg" alt="Profile" class="profile-img" id="profileImg">
+                        <div class="profile-overlay">
+                            <div class="social-links">
+                                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">Tentang Saya</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p id="aboutText1">
+                        Saya adalah seorang Full Stack Developer dengan pengalaman 5+ tahun dalam 
+                        pengembangan aplikasi web dan mobile. Saya memiliki keahlian dalam berbagai 
+                        teknologi modern dan selalu berusaha untuk belajar hal-hal baru.
+                    </p>
+                    <p id="aboutText2">
+                        Passion saya adalah menciptakan solusi yang tidak hanya fungsional tetapi juga 
+                        memberikan pengalaman pengguna yang luar biasa. Saya percaya bahwa teknologi 
+                        yang baik adalah teknologi yang mudah digunakan oleh semua orang.
+                    </p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <h3 id="stat1Number">5+</h3>
+                        <p id="stat1Label">Tahun Pengalaman</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 id="stat2Number">50+</h3>
+                        <p id="stat2Label">Proyek Selesai</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 id="stat3Number">30+</h3>
+                        <p id="stat3Label">Klien Puas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title">Pengalaman Kerja</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>Senior Full Stack Developer</h3>
+                        <h4>Tech Solutions Inc.</h4>
+                        <span class="timeline-date">2022 - Sekarang</span>
+                        <p>
+                            Memimpin pengembangan aplikasi web skala besar menggunakan React, Node.js, 
+                            dan AWS. Berhasil meningkatkan performa aplikasi sebesar 40% dan 
+                            mengurangi bug production sebesar 60%.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>Full Stack Developer</h3>
+                        <h4>Digital Agency Pro</h4>
+                        <span class="timeline-date">2020 - 2022</span>
+                        <p>
+                            Mengembangkan aplikasi web dan mobile untuk berbagai klien. 
+                            Menggunakan teknologi seperti Vue.js, Laravel, dan React Native.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>Frontend Developer</h3>
+                        <h4>Web Studio Creative</h4>
+                        <span class="timeline-date">2019 - 2020</span>
+                        <p>
+                            Fokus pada pengembangan antarmuka pengguna yang responsif dan modern. 
+                            Menggunakan HTML5, CSS3, JavaScript, dan berbagai framework frontend.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Keahlian Teknis</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Frontend Development</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span>React</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>Vue.js</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>JavaScript</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>TypeScript</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Backend Development</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span>Node.js</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>Python</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>PHP</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>MySQL</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Tools & Technologies</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span>Git</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>AWS</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>Docker</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>Figma</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Proyek Terbaru</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="/uploads/project1.jpg" alt="E-Commerce App">
+                        <div class="project-overlay">
+                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>E-Commerce Platform</h3>
+                        <p>Aplikasi e-commerce lengkap dengan fitur payment gateway, manajemen inventory, dan dashboard admin.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">Stripe</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="/uploads/project2.jpg" alt="Task Manager">
+                        <div class="project-overlay">
+                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Task Management App</h3>
+                        <p>Aplikasi manajemen tugas dengan real-time collaboration, drag & drop interface, dan notifikasi.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Vue.js</span>
+                            <span class="tech-tag">Socket.io</span>
+                            <span class="tech-tag">Express</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="/uploads/project3.jpg" alt="Weather App">
+                        <div class="project-overlay">
+                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Weather Dashboard</h3>
+                        <p>Dashboard cuaca dengan prediksi 7 hari, peta interaktif, dan notifikasi cuaca ekstrem.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Chart.js</span>
+                            <span class="tech-tag">OpenWeather API</span>
+                            <span class="tech-tag">PWA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Hubungi Saya</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p id="contactEmail">rezafnaw@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Telepon</h4>
+                            <p id="contactPhone">+62 838-9048-5939</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Lokasi</h4>
+                            <p id="contactLocation">Bandung, Indonesia</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Nama Lengkap" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Subjek" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Pesan" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kirim Pesan</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Reza Nawawi. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeLoginModal">&times;</span>
+            <h2>Login Administrator</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content edit-modal">
+            <span class="close" id="closeEditModal">&times;</span>
+            <h2>Edit CV</h2>
+            <form id="editForm">
+                <div class="edit-tabs">
+                    <button type="button" class="tab-btn active" data-tab="personal">Personal</button>
+                    <button type="button" class="tab-btn" data-tab="about">Tentang Saya</button>
+                    <button type="button" class="tab-btn" data-tab="experience">Pengalaman</button>
+                    <button type="button" class="tab-btn" data-tab="skills">Keahlian</button>
+                    <button type="button" class="tab-btn" data-tab="projects">Proyek</button>
+                    <button type="button" class="tab-btn" data-tab="social">Social Media</button>
+                </div>
+                
+                <div id="personal-tab" class="tab-content active">
+                    <div class="form-group">
+                        <label for="editName">Nama Lengkap</label>
+                        <input type="text" id="editName" name="name" value="Reza Fadjar Nawawi">
+                    </div>
+                    <div class="form-group">
+                        <label for="editTitle">Posisi/Title</label>
+                        <input type="text" id="editTitle" name="title" value="Full Stack Developer & UI/UX Designer">
+                    </div>
+                    <div class="form-group">
+                        <label for="editDescription">Deskripsi</label>
+                        <textarea id="editDescription" name="description" rows="4">Saya seorang developer berpengalaman dengan passion untuk menciptakan solusi digital yang inovatif dan user-friendly.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmail">Email</label>
+                        <input type="email" id="editEmail" name="email" value="rezafnaw@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPhone">Telepon</label>
+                        <input type="text" id="editPhone" name="phone" value="+62 812-3456-7890">
+                    </div>
+                    <div class="form-group">
+                        <label for="editLocation">Lokasi</label>
+                        <input type="text" id="editLocation" name="location" value="Bandung, Indonesia">
+                    </div>
+                </div>
+
+                <div id="about-tab" class="tab-content">
+                    <h3>Informasi Tentang Saya</h3>
+                    <div class="form-group">
+                        <label for="editAboutText1">Paragraf Pertama</label>
+                        <textarea id="editAboutText1" name="aboutText1" rows="4">Saya adalah seorang Full Stack Developer dengan pengalaman 5+ tahun dalam pengembangan aplikasi web dan mobile. Saya memiliki keahlian dalam berbagai teknologi modern dan selalu berusaha untuk belajar hal-hal baru.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="editAboutText2">Paragraf Kedua</label>
+                        <textarea id="editAboutText2" name="aboutText2" rows="4">Passion saya adalah menciptakan solusi yang tidak hanya fungsional tetapi juga memberikan pengalaman pengguna yang luar biasa. Saya percaya bahwa teknologi yang baik adalah teknologi yang mudah digunakan oleh semua orang.</textarea>
+                    </div>
+                    
+                    <h3>Statistik Pencapaian</h3>
+                    <div class="stats-editor">
+                        <div class="stat-editor-item">
+                            <div class="form-group">
+                                <label>Angka</label>
+                                <input type="text" id="editStat1Number" value="5+" placeholder="Contoh: 5+">
+                            </div>
+                            <div class="form-group">
+                                <label>Label</label>
+                                <input type="text" id="editStat1Label" value="Tahun Pengalaman" placeholder="Contoh: Tahun Pengalaman">
+                            </div>
+                        </div>
+                        <div class="stat-editor-item">
+                            <div class="form-group">
+                                <label>Angka</label>
+                                <input type="text" id="editStat2Number" value="50+" placeholder="Contoh: 50+">
+                            </div>
+                            <div class="form-group">
+                                <label>Label</label>
+                                <input type="text" id="editStat2Label" value="Proyek Selesai" placeholder="Contoh: Proyek Selesai">
+                            </div>
+                        </div>
+                        <div class="stat-editor-item">
+                            <div class="form-group">
+                                <label>Angka</label>
+                                <input type="text" id="editStat3Number" value="30+" placeholder="Contoh: 30+">
+                            </div>
+                            <div class="form-group">
+                                <label>Label</label>
+                                <input type="text" id="editStat3Label" value="Klien Puas" placeholder="Contoh: Klien Puas">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="experience-tab" class="tab-content">
+                    <div class="section-header">
+                        <h3>Pengalaman Kerja</h3>
+                        <button type="button" class="btn btn-secondary" id="addExperience">+ Tambah Pengalaman</button>
+                    </div>
+                    <div class="experience-editor" id="experienceEditor">
+                        <!-- Experience items will be dynamically added here -->
+                    </div>
+                </div>
+
+                <div id="skills-tab" class="tab-content">
+                    <div class="skills-editor">
+                        <div class="section-header">
+                            <h3>Keahlian</h3>
+                            <button type="button" class="btn btn-primary" id="addSkillCategory">+ Tambah Kategori Keahlian</button>
+                        </div>
+                        <div id="skillCategoriesContainer">
+                            <div class="skill-category">
+                                <div class="section-header">
+                                    <h3>Frontend Development</h3>
+                                    <div class="skill-category-controls">
+                                        <button type="button" class="btn btn-secondary btn-sm" data-category="frontend">+ Tambah Skill</button>
+                                        <button type="button" class="btn btn-danger btn-sm remove-category" data-category="frontend">×</button>
+                                    </div>
+                                </div>
+                                <div class="skill-editor-list" data-category="frontend">
+                                    <!-- Frontend skills will be dynamically added here -->
+                                </div>
+                            </div>
+                            
+                            <div class="skill-category">
+                                <div class="section-header">
+                                    <h3>Backend Development</h3>
+                                    <div class="skill-category-controls">
+                                        <button type="button" class="btn btn-secondary btn-sm" data-category="backend">+ Tambah Skill</button>
+                                        <button type="button" class="btn btn-danger btn-sm remove-category" data-category="backend">×</button>
+                                    </div>
+                                </div>
+                                <div class="skill-editor-list" data-category="backend">
+                                    <!-- Backend skills will be dynamically added here -->
+                                </div>
+                            </div>
+                            
+                            <div class="skill-category">
+                                <div class="section-header">
+                                    <h3>Tools & Technologies</h3>
+                                    <div class="skill-category-controls">
+                                        <button type="button" class="btn btn-secondary btn-sm" data-category="tools">+ Tambah Skill</button>
+                                        <button type="button" class="btn btn-danger btn-sm remove-category" data-category="tools">×</button>
+                                    </div>
+                                </div>
+                                <div class="skill-editor-list" data-category="tools">
+                                    <!-- Tools skills will be dynamically added here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="projects-tab" class="tab-content">
+                    <div class="section-header">
+                        <h3>Proyek Portfolio</h3>
+                        <button type="button" class="btn btn-secondary" id="addProject">+ Tambah Proyek</button>
+                    </div>
+                    <div class="projects-editor" id="projectsEditor">
+                        <!-- Project items will be dynamically added here -->
+                    </div>
+                </div>
+
+                <div id="social-tab" class="tab-content">
+                    <h3>Social Media Links</h3>
+                    <div class="social-editor">
+                        <div class="social-editor-item">
+                            <div class="form-group">
+                                <label for="editLinkedin">LinkedIn</label>
+                                <input type="url" id="editLinkedin" name="linkedin" value="https://linkedin.com/in/rezafnaw" placeholder="https://linkedin.com/in/username">
+                            </div>
+                        </div>
+                        <div class="social-editor-item">
+                            <div class="form-group">
+                                <label for="editGithub">GitHub</label>
+                                <input type="url" id="editGithub" name="github" value="https://github.com/rezafnaw" placeholder="https://github.com/username">
+                            </div>
+                        </div>
+                        <div class="social-editor-item">
+                            <div class="form-group">
+                                <label for="editFacebook">Facebook</label>
+                                <input type="url" id="editFacebook" name="facebook" value="https://facebook.com/rezafnaw" placeholder="https://facebook.com/username">
+                            </div>
+                        </div>
+                        <div class="social-editor-item">
+                            <div class="form-group">
+                                <label for="editInstagram">Instagram</label>
+                                <input type="url" id="editInstagram" name="instagram" value="https://instagram.com/rezafnaw" placeholder="https://instagram.com/username">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelEdit">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

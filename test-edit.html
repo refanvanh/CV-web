@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Edit Button</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .edit-btn { 
+            background: #4f46e5; 
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin: 20px 0;
+        }
+        .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.5); 
+        }
+        .modal-content { 
+            background-color: white; 
+            margin: 15% auto; 
+            padding: 20px; 
+            border-radius: 10px; 
+            width: 80%; 
+            max-width: 500px; 
+        }
+        .close { 
+            color: #aaa; 
+            float: right; 
+            font-size: 28px; 
+            font-weight: bold; 
+            cursor: pointer; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Edit Button</h1>
+    <p>Klik tombol di bawah untuk test fungsi edit:</p>
+    
+    <button class="edit-btn" onclick="openLoginModal()">
+        <i class="fas fa-edit"></i> Test Edit Button
+    </button>
+    
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Test Modal</h2>
+            <p>Jika Anda melihat ini, berarti JavaScript berfungsi!</p>
+            <p>Username: refanvanh</p>
+            <p>Password: bnesindangpanon64</p>
+        </div>
+    </div>
+
+    <script>
+        console.log('JavaScript loaded successfully!');
+        
+        function openLoginModal() {
+            console.log('openLoginModal called');
+            const modal = document.getElementById('loginModal');
+            modal.style.display = 'block';
+        }
+        
+        function closeLoginModal() {
+            console.log('closeLoginModal called');
+            const modal = document.getElementById('loginModal');
+            modal.style.display = 'none';
+        }
+        
+        // Test if functions are available
+        console.log('openLoginModal function:', typeof openLoginModal);
+        console.log('closeLoginModal function:', typeof closeLoginModal);
+    </script>
+</body>
+</html>

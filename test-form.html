@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Form</title>
+</head>
+<body>
+    <h1>Test Form Submission</h1>
+    
+    <form id="testForm">
+        <div>
+            <label for="testName">Nama:</label>
+            <input type="text" id="testName" value="Test Name">
+        </div>
+        <div>
+            <label for="testEmail">Email:</label>
+            <input type="email" id="testEmail" value="test@example.com">
+        </div>
+        <button type="submit">Test Submit</button>
+    </form>
+    
+    <script>
+        document.getElementById('testForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Form submitted!');
+            alert('Form berhasil di-submit!');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Simple</title>
+</head>
+<body>
+    <h1>Test Simple</h1>
+    <button id="testButton">Test Button</button>
+    <div id="result"></div>
+    
+    <script>
+        console.log('Script starting...');
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded');
+            
+            const testButton = document.getElementById('testButton');
+            const result = document.getElementById('result');
+            
+            if (testButton) {
+                console.log('Button found');
+                
+                testButton.addEventListener('click', function() {
+                    console.log('Button clicked!');
+                    result.innerHTML = '<p style="color: green;">Button berhasil diklik!</p>';
+                });
+            } else {
+                console.error('Button not found!');
+            }
+        });
+        
+        console.log('Script loaded');
+    </script>
+</body>
+</html>
