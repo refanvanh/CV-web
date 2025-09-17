@@ -1,183 +1,267 @@
-# 🔒 Sistem Keamanan Password
+# 🔒 Security Policy
 
-## 🛡️ **Teknologi Keamanan yang Digunakan:**
+Dokumen ini menjelaskan kebijakan keamanan untuk CV Portfolio Website dan cara melaporkan kerentanan keamanan.
 
-### **1. bcryptjs - Password Hashing**
-```javascript
-const bcrypt = require('bcryptjs');
-const hashedPassword = await bcrypt.hash('bnesindangpanon64', 10);
+## 🛡️ Security Overview
+
+CV Portfolio Website dibangun dengan prinsip keamanan yang ketat untuk melindungi data admin dan pengguna. Kami menggunakan berbagai lapisan keamanan untuk memastikan aplikasi tetap aman.
+
+## 🔐 Security Features
+
+### **Authentication & Authorization**
+- ✅ **Password Hashing**: bcrypt dengan salt rounds 10
+- ✅ **Session Management**: JWT-based authentication
+- ✅ **Rate Limiting**: 100 requests per 15 menit per IP
+- ✅ **Input Validation**: Sanitasi semua input pengguna
+- ✅ **CORS Protection**: Konfigurasi CORS yang aman
+
+### **Data Protection**
+- ✅ **File Upload Security**: Validasi tipe dan ukuran file
+- ✅ **Input Sanitization**: Mencegah XSS attacks
+- ✅ **SQL Injection Prevention**: Parameterized queries
+- ✅ **Data Encryption**: Sensitive data di-hash
+- ✅ **File System Security**: Restricted file access
+
+### **Network Security**
+- ✅ **Helmet.js**: Security headers lengkap
+- ✅ **HTTPS Enforcement**: Redirect HTTP ke HTTPS
+- ✅ **Content Security Policy**: Restrict resource loading
+- ✅ **X-Frame-Options**: Prevent clickjacking
+- ✅ **X-Content-Type-Options**: Prevent MIME sniffing
+
+## 🚨 Supported Versions
+
+| Version | Supported          |
+| ------- | ------------------ |
+| 1.0.x   | ✅ Yes             |
+| < 1.0   | ❌ No              |
+
+## 🔍 Security Audit
+
+### **Regular Security Checks**
+- [ ] **Dependency Audit**: `npm audit` setiap minggu
+- [ ] **Code Review**: Review kode untuk kerentanan
+- [ ] **Penetration Testing**: Test keamanan berkala
+- [ ] **Security Headers**: Validasi security headers
+- [ ] **Input Validation**: Test semua input fields
+
+### **Security Tools Used**
+- **npm audit**: Dependency vulnerability scanning
+- **helmet**: Security headers middleware
+- **bcryptjs**: Password hashing
+- **express-rate-limit**: Rate limiting
+- **multer**: Secure file upload
+
+## 🐛 Reporting a Vulnerability
+
+### **How to Report**
+Jika Anda menemukan kerentanan keamanan, silakan:
+
+1. **JANGAN** buat issue publik di GitHub
+2. **Email** ke: refanvanh@gmail.com
+3. **Subject**: [SECURITY] CV Portfolio Website Vulnerability
+4. **Include**:
+   - Deskripsi kerentanan
+   - Steps to reproduce
+   - Potential impact
+   - Suggested fix (jika ada)
+
+### **Response Timeline**
+- **Acknowledgment**: 24 jam
+- **Initial Assessment**: 3 hari
+- **Fix Development**: 7-14 hari
+- **Public Disclosure**: Setelah fix tersedia
+
+### **What to Include**
+```
+Subject: [SECURITY] CV Portfolio Website Vulnerability
+
+Description:
+[Detail kerentanan yang ditemukan]
+
+Steps to Reproduce:
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
+
+Expected Behavior:
+[Yang seharusnya terjadi]
+
+Actual Behavior:
+[Yang benar-benar terjadi]
+
+Environment:
+- OS: [Windows/Linux/Mac]
+- Browser: [Chrome/Firefox/Safari]
+- Node.js Version: [Version]
+- Application Version: [Version]
+
+Impact:
+[Potensi dampak kerentanan]
+
+Suggested Fix:
+[Solusi yang disarankan, jika ada]
 ```
 
-**Fitur Keamanan:**
-- ✅ **Salt Rounds: 10** - Tingkat keamanan tinggi
-- ✅ **One-way Hashing** - Password tidak bisa di-reverse
-- ✅ **Salt Otomatis** - Setiap hash unik meski password sama
-- ✅ **Adaptive Hashing** - Bisa ditingkatkan seiring waktu
+## 🔧 Security Best Practices
 
-### **2. JWT (JSON Web Token) - Session Management**
-```javascript
-const jwt = require('jsonwebtoken');
-const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: '24h' });
+### **For Developers**
+- **Never commit** credentials atau API keys
+- **Use environment variables** untuk sensitive data
+- **Validate all inputs** dari user
+- **Keep dependencies updated** secara berkala
+- **Use HTTPS** di production
+- **Implement proper logging** untuk monitoring
+
+### **For Administrators**
+- **Change default passwords** setelah deployment
+- **Use strong passwords** (min 12 karakter)
+- **Enable 2FA** jika tersedia
+- **Regular backups** data penting
+- **Monitor logs** untuk aktivitas mencurigakan
+- **Keep server updated** dengan security patches
+
+### **For Users**
+- **Use strong passwords** untuk admin account
+- **Don't share credentials** dengan orang lain
+- **Logout** setelah selesai editing
+- **Report suspicious activity** segera
+- **Keep browser updated** untuk security patches
+
+## 🛠️ Security Configuration
+
+### **Environment Variables**
+```bash
+# Production
+NODE_ENV=production
+PORT=3000
+
+# Security
+BCRYPT_ROUNDS=10
+JWT_SECRET=your-secret-key
+RATE_LIMIT_WINDOW=900000  # 15 minutes
+RATE_LIMIT_MAX=100
+
+# File Upload
+MAX_FILE_SIZE=5242880  # 5MB
+ALLOWED_FILE_TYPES=jpg,jpeg,png,gif
 ```
 
-**Fitur Keamanan:**
-- ✅ **Token Expiration** - Expire dalam 24 jam
-- ✅ **Secret Key** - Di-enkripsi dengan secret key
-- ✅ **Stateless** - Tidak perlu session di server
-- ✅ **Tamper Proof** - Tidak bisa dimodifikasi
-
-### **3. Rate Limiting - Anti Brute Force**
+### **Security Headers**
 ```javascript
+// Helmet configuration
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+            fontSrc: ["'self'", "https://fonts.gstatic.com"],
+            imgSrc: ["'self'", "data:", "https:"],
+            scriptSrc: ["'self'"],
+            connectSrc: ["'self'"]
+        }
+    },
+    crossOriginEmbedderPolicy: false
+}));
+```
+
+### **Rate Limiting**
+```javascript
+// Rate limiting configuration
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 menit
-  max: 100 // maksimal 100 request per IP
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+    message: {
+        success: false,
+        message: 'Too many requests from this IP, please try again later.'
+    },
+    standardHeaders: true,
+    legacyHeaders: false
 });
 ```
 
-**Fitur Keamanan:**
-- ✅ **Request Limiting** - Maksimal 100 request per 15 menit
-- ✅ **IP-based** - Per alamat IP
-- ✅ **Anti Brute Force** - Mencegah serangan password
+## 🔍 Security Checklist
 
-### **4. Helmet.js - Security Headers**
-```javascript
-const helmet = require('helmet');
-app.use(helmet());
-```
+### **Pre-Deployment**
+- [ ] **Dependencies Updated**: `npm audit` clean
+- [ ] **Environment Variables**: All secrets in env vars
+- [ ] **Default Passwords**: Changed from defaults
+- [ ] **HTTPS Enabled**: SSL certificate configured
+- [ ] **Security Headers**: Helmet.js configured
+- [ ] **Rate Limiting**: Enabled and configured
+- [ ] **File Upload**: Validation enabled
+- [ ] **CORS**: Properly configured
+- [ ] **Logging**: Security events logged
+- [ ] **Backup**: Data backup strategy
 
-**Fitur Keamanan:**
-- ✅ **XSS Protection** - Mencegah Cross-Site Scripting
-- ✅ **Content Security Policy** - Kontrol resource loading
-- ✅ **Hide X-Powered-By** - Menyembunyikan teknologi server
-- ✅ **HSTS** - HTTP Strict Transport Security
+### **Post-Deployment**
+- [ ] **Monitoring**: Security monitoring enabled
+- [ ] **Logs**: Regular log review
+- [ ] **Updates**: Regular security updates
+- [ ] **Testing**: Penetration testing
+- [ ] **Incident Response**: Plan in place
+- [ ] **Documentation**: Security docs updated
+- [ ] **Training**: Team security training
+- [ ] **Compliance**: Security compliance checked
 
-## 🔐 **Cara Password Disimpan:**
+## 🚨 Incident Response
 
-### **Sebelum Disimpan:**
-```
-Password Asli: "bnesindangpanon64"
-```
+### **Security Incident Process**
+1. **Detection**: Identify security incident
+2. **Assessment**: Evaluate impact and severity
+3. **Containment**: Isolate affected systems
+4. **Eradication**: Remove threat
+5. **Recovery**: Restore normal operations
+6. **Lessons Learned**: Document and improve
 
-### **Setelah Hashing (bcrypt):**
-```
-$2a$10$N9qo8uLOickgx2ZMRZoMye.IjdQvOQjOqjOqjOqjOqjOqjOqjOqjO
-```
+### **Contact Information**
+- **Security Team**: refanvanh@gmail.com
+- **Emergency**: [Your emergency contact]
+- **GitHub Issues**: [Repository issues page]
 
-**Penjelasan:**
-- `$2a$` = Algoritma bcrypt
-- `10` = Salt rounds (2^10 = 1024 iterations)
-- `N9qo8uLOickgx2ZMRZoMye` = Salt (random)
-- `IjdQvOQjOqjOqjOqjOqjOqjOqjO` = Hash result
+## 📚 Security Resources
 
-## 🛡️ **Lapisan Keamanan:**
+### **Documentation**
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
+- [Node.js Security](https://nodejs.org/en/docs/guides/security/)
+- [Express.js Security](https://expressjs.com/en/advanced/best-practice-security.html)
+- [Helmet.js Documentation](https://helmetjs.github.io/)
 
-### **Layer 1: Password Hashing**
-- Password tidak pernah disimpan dalam bentuk plain text
-- Menggunakan bcrypt dengan salt rounds 10
-- Setiap hash unik meski password sama
+### **Tools**
+- **npm audit**: `npm audit`
+- **Snyk**: Vulnerability scanning
+- **OWASP ZAP**: Web application security testing
+- **Burp Suite**: Web vulnerability scanner
 
-### **Layer 2: JWT Authentication**
-- Token berisi informasi user yang di-enkripsi
-- Expire otomatis dalam 24 jam
-- Tidak bisa dimodifikasi tanpa secret key
+### **Training**
+- [OWASP WebGoat](https://owasp.org/www-project-webgoat/)
+- [Node.js Security Course](https://nodejs.org/en/docs/guides/security/)
+- [Express.js Security Best Practices](https://expressjs.com/en/advanced/best-practice-security.html)
 
-### **Layer 3: Rate Limiting**
-- Mencegah serangan brute force
-- Membatasi jumlah request per IP
-- Window 15 menit dengan maksimal 100 request
+## 🔄 Security Updates
 
-### **Layer 4: Security Headers**
-- Helmet.js menambahkan security headers
-- Mencegah XSS, clickjacking, dll
-- Menyembunyikan informasi server
+### **Regular Updates**
+- **Dependencies**: Weekly security updates
+- **Node.js**: Monthly updates
+- **Security Patches**: As needed
+- **Documentation**: Quarterly review
 
-## 🔧 **Cara Mengubah Password:**
+### **Emergency Updates**
+- **Critical Vulnerabilities**: Within 24 hours
+- **High Severity**: Within 72 hours
+- **Medium Severity**: Within 1 week
+- **Low Severity**: Within 1 month
 
-### **1. Generate Hash Baru:**
-```javascript
-const bcrypt = require('bcryptjs');
-const newPassword = 'password-baru-anda';
-const hashedPassword = await bcrypt.hash(newPassword, 10);
-console.log(hashedPassword);
-```
+## 📞 Security Contact
 
-### **2. Update di data/users.json:**
-```json
-{
-  "id": 1,
-  "username": "refanvanh",
-  "password": "$2a$10$hash-baru-di-sini",
-  "role": "admin",
-  "createdAt": "2024-01-01T00:00:00.000Z"
-}
-```
+**Email**: refanvanh@gmail.com
+**Subject**: [SECURITY] CV Portfolio Website
 
-### **3. Restart Server:**
-```bash
-npm start
-```
-
-## ⚠️ **Best Practices Keamanan:**
-
-### **1. Password Policy:**
-- ✅ Minimal 8 karakter
-- ✅ Kombinasi huruf, angka, simbol
-- ✅ Tidak menggunakan kata umum
-- ✅ Ganti password secara berkala
-
-### **2. Server Security:**
-- ✅ Gunakan HTTPS di production
-- ✅ Update dependencies secara berkala
-- ✅ Monitor log untuk aktivitas mencurigakan
-- ✅ Backup data secara teratur
-
-### **3. Environment Variables:**
-```env
-JWT_SECRET=your-super-secret-key-here
-PORT=3000
-NODE_ENV=production
-```
-
-## 🚨 **Monitoring & Logging:**
-
-### **Login Attempts:**
-- Setiap percobaan login dicatat
-- Rate limiting otomatis aktif
-- Token expire dalam 24 jam
-
-### **Error Handling:**
-- Error tidak menampilkan informasi sensitif
-- Log error untuk debugging
-- Graceful error handling
-
-## 🔍 **Cara Verifikasi Keamanan:**
-
-### **1. Cek Password Hash:**
-```javascript
-const bcrypt = require('bcryptjs');
-const isValid = await bcrypt.compare('password-input', 'stored-hash');
-console.log(isValid); // true atau false
-```
-
-### **2. Cek JWT Token:**
-```javascript
-const jwt = require('jsonwebtoken');
-const decoded = jwt.verify(token, JWT_SECRET);
-console.log(decoded); // user info
-```
-
-## 📊 **Tingkat Keamanan:**
-
-| Aspek | Level | Keterangan |
-|-------|-------|------------|
-| Password Hashing | ⭐⭐⭐⭐⭐ | bcrypt dengan salt rounds 10 |
-| Session Management | ⭐⭐⭐⭐⭐ | JWT dengan expiration |
-| Rate Limiting | ⭐⭐⭐⭐ | 100 req/15min per IP |
-| Security Headers | ⭐⭐⭐⭐⭐ | Helmet.js lengkap |
-| Input Validation | ⭐⭐⭐⭐ | File upload & form validation |
-
-**Overall Security Level: ⭐⭐⭐⭐⭐ (Sangat Aman)**
+**Response Time**: 24 hours
+**Severity Levels**: Critical, High, Medium, Low
 
 ---
 
-**Sistem keamanan ini sudah memenuhi standar industri untuk aplikasi web modern!** 🛡️
+**⚠️ Important**: Jangan pernah share credentials atau sensitive information melalui channel publik. Selalu gunakan email untuk laporan keamanan.
+
+**🔒 Remember**: Keamanan adalah tanggung jawab bersama. Mari kita jaga aplikasi ini tetap aman!

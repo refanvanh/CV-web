@@ -1,232 +1,280 @@
-# CV Portfolio Website
+# 🚀 CV Portfolio Website
 
-Website CV/Portfolio modern dengan fitur edit untuk administrator. Dibangun dengan Node.js, Express, dan vanilla JavaScript.
+Modern, responsive CV portfolio website dengan admin panel untuk mengedit konten secara real-time. Dibangun dengan Node.js, Express.js, dan vanilla JavaScript.
 
-## 🚀 Fitur Utama
+## ✨ Fitur Utama
 
-- **Portfolio Modern**: Desain responsif dan menarik
-- **Sistem Login**: Autentikasi administrator dengan JWT
-- **Edit CV Real-time**: Update data CV langsung dari browser
-- **Upload Gambar**: Upload foto profil dan gambar proyek
-- **API Backend**: RESTful API untuk manajemen data
-- **Penyimpanan File**: Data tersimpan di file JSON
-- **Contact Form**: Form kontak yang fungsional
+### 🎨 **Frontend**
+- **Responsive Design** - Tampilan optimal di desktop, tablet, dan mobile
+- **Modern UI/UX** - Desain clean dan professional dengan animasi smooth
+- **Real-time Clock** - Jam digital yang update otomatis
+- **Interactive Elements** - Hover effects dan smooth transitions
+- **Font Awesome Icons** - Icon library lengkap untuk UI
 
-## 📁 Struktur Proyek
+### 🔧 **Admin Panel**
+- **Secure Login** - Autentikasi dengan bcrypt dan JWT
+- **Real-time Editing** - Edit CV content tanpa reload halaman
+- **Dynamic Sections** - Tambah/edit/hapus experience, skills, dan projects
+- **File Upload** - Upload foto profil dan gambar project
+- **Data Validation** - Validasi input form yang robust
 
-```
-CV-web/
-├── public/                 # Frontend files
-│   ├── index.html         # Halaman utama
-│   ├── styles.css         # Styling
-│   └── script.js          # JavaScript frontend
-├── data/                  # Data storage
-│   ├── cv-data.json       # Data CV
-│   └── users.json         # Data user
-├── public/uploads/        # Uploaded images
-├── server.js              # Backend server
-├── package.json           # Dependencies
-└── README.md             # Dokumentasi
-```
+### 📊 **Sections yang Dapat Diedit**
+- **Personal Info** - Nama, title, deskripsi, kontak, lokasi
+- **About Me** - Dua paragraf deskripsi + 3 statistik
+- **Social Media** - LinkedIn, GitHub, Facebook, Instagram
+- **Experience** - Daftar pengalaman kerja dengan reorder functionality
+- **Skills** - Kategori keahlian dengan level proficiency
+- **Projects** - Portfolio project dengan link live dan GitHub
 
-## 🛠️ Instalasi & Setup
+### 🔒 **Security Features**
+- **Helmet.js** - Security headers dan CSP
+- **Rate Limiting** - Anti brute force protection
+- **Input Sanitization** - Mencegah XSS attacks
+- **Secure File Upload** - Validasi file type dan size
+- **Environment Variables** - Konfigurasi aman
 
-### Prerequisites
-- Node.js (versi 14 atau lebih baru)
+## 🛠️ Teknologi yang Digunakan
+
+### **Backend**
+- **Node.js** - Runtime JavaScript
+- **Express.js** - Web framework
+- **bcryptjs** - Password hashing
+- **multer** - File upload handling
+- **helmet** - Security middleware
+- **express-rate-limit** - Rate limiting
+
+### **Frontend**
+- **HTML5** - Semantic markup
+- **CSS3** - Flexbox, Grid, animations
+- **Vanilla JavaScript** - No framework dependencies
+- **Font Awesome** - Icon library
+- **Google Fonts** - Typography
+
+### **Data Storage**
+- **JSON Files** - File-based data persistence
+- **File System** - Local file storage
+- **Image Uploads** - Static file serving
+
+## 📦 Instalasi
+
+### **Prerequisites**
+- Node.js (v16.20.2 atau lebih baru)
 - npm atau yarn
+- Git
 
-### 1. Clone Repository
-```bash
-git clone <repository-url>
-cd CV-web
-```
+### **Quick Start**
 
-### 2. Install Dependencies
-```bash
-npm install
-```
+1. **Clone Repository**
+   ```bash
+   git clone https://github.com/refanvanh/CV-web.git
+   cd CV-web
+   ```
 
-### 3. Setup Environment (Opsional)
-Buat file `.env` untuk konfigurasi:
-```env
-PORT=3000
-JWT_SECRET=your-secret-key-here
-```
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-### 4. Jalankan Server
-```bash
-# Development mode
-npm run dev
+3. **Run Server**
+   ```bash
+   # Windows
+   npm start
+   
+   # Linux/Mac
+   ./start.sh
+   ```
 
-# Production mode
-npm start
-```
+4. **Access Website**
+   - **Main Site:** http://localhost:3001
+   - **Admin Panel:** Login dengan kredensial di `data/users.json`
 
-### 5. Akses Website
-Buka browser dan kunjungi: `http://localhost:3000`
+### **Default Credentials**
+- **Username:** `refanvanh`
+- **Password:** `bnesindangpanon64`
 
-## 🔐 Login Administrator
+## 🚀 Deployment
 
-**Admin Credentials:**
-- Username: `[HIDDEN]`
-- Password: `[HIDDEN]`
+### **Vercel (Recommended)**
+1. Install Vercel CLI: `npm i -g vercel`
+2. Run: `vercel`
+3. Follow prompts untuk konfigurasi
+4. Deploy: `vercel --prod`
 
-⚠️ **PENTING**: Kredensial admin tersimpan di file `data/users.json`
+### **Railway**
+1. Connect GitHub repository
+2. Set environment variables
+3. Deploy automatically
 
-## 📝 Cara Menggunakan
+### **Heroku**
+1. Create Heroku app
+2. Set buildpacks: `heroku/nodejs`
+3. Deploy: `git push heroku main`
 
-### 1. Melihat CV
-- Buka website di browser
-- Scroll untuk melihat semua section CV
-
-### 2. Edit CV (Admin)
-- Klik tombol "Edit" di navbar
-- Login dengan kredensial admin
-- Edit data di 4 tab: Personal, Pengalaman, Keahlian, Proyek
-- Klik "Simpan Perubahan"
-
-### 3. Upload Gambar
-- Di halaman edit, gunakan form upload untuk foto profil
-- Gambar akan tersimpan di folder `public/uploads/`
-
-## 🔧 Konfigurasi
-
-### Mengubah Password Admin
-Edit file `data/users.json` dan gunakan bcrypt untuk hash password baru.
-
-**Contoh:**
-```javascript
-const bcrypt = require('bcryptjs');
-const newPassword = 'password-baru-anda';
-const hashedPassword = await bcrypt.hash(newPassword, 10);
-```
-
-### Mengubah Data Default CV
-Edit file `data/cv-data.json` untuk mengubah data default.
-
-## 🚀 Deployment ke Production
-
-### 1. VPS/Server
-```bash
-# Upload files ke server
-scp -r . user@your-server:/path/to/app
-
-# Install dependencies
-npm install --production
-
-# Install PM2 untuk process management
-npm install -g pm2
-
-# Jalankan dengan PM2
-pm2 start server.js --name "cv-portfolio"
-pm2 save
-pm2 startup
-```
-
-### 2. Heroku
-```bash
-# Install Heroku CLI
-# Login ke Heroku
-heroku login
-
-# Buat app
-heroku create your-cv-portfolio
-
-# Deploy
-git push heroku main
-```
-
-### 3. Vercel/Netlify
-- Upload folder `public/` untuk static hosting
-- Untuk backend, gunakan Vercel Functions atau Netlify Functions
-
-### 4. Docker (Opsional)
-Buat file `Dockerfile`:
+### **Docker**
 ```dockerfile
 FROM node:16-alpine
 WORKDIR /app
 COPY package*.json ./
-RUN npm install --production
+RUN npm install
 COPY . .
-EXPOSE 3000
+EXPOSE 3001
 CMD ["npm", "start"]
 ```
 
-## 📊 API Endpoints
+## 📁 Struktur Project
 
-### Authentication
-- `POST /api/login` - Login admin
+```
+CV-web/
+├── 📁 data/                 # Data storage
+│   ├── cv-data.json        # CV content data
+│   └── users.json          # Admin credentials
+├── 📁 public/              # Static files
+│   ├── index.html          # Main website
+│   ├── styles.css          # CSS styles
+│   ├── script.js           # Frontend JavaScript
+│   ├── 📁 uploads/         # Uploaded images
+│   └── favicon.ico         # Website icon
+├── 📁 node_modules/        # Dependencies
+├── server.js               # Backend server
+├── package.json            # Project configuration
+├── .gitignore             # Git ignore rules
+├── README.md              # Documentation
+└── SECURITY.md            # Security guidelines
+```
+
+## 🔧 Konfigurasi
+
+### **Environment Variables**
+```bash
+PORT=3001                  # Server port
+NODE_ENV=production        # Environment mode
+```
+
+### **Data Structure**
+```json
+{
+  "personal": {
+    "name": "Your Name",
+    "title": "Your Title",
+    "description": "Your description",
+    "email": "your@email.com",
+    "phone": "+62 xxx-xxxx-xxxx",
+    "location": "Your Location"
+  },
+  "about": {
+    "text1": "First paragraph",
+    "text2": "Second paragraph",
+    "stats": [
+      {"number": "7+", "label": "Years Experience"},
+      {"number": "50+", "label": "Projects Completed"},
+      {"number": "100%", "label": "Client Satisfaction"}
+    ]
+  },
+  "social": {
+    "linkedin": "https://linkedin.com/in/username",
+    "github": "https://github.com/username",
+    "facebook": "https://facebook.com/username",
+    "instagram": "https://instagram.com/username"
+  }
+}
+```
+
+## 🎯 API Endpoints
+
+### **Authentication**
+- `POST /api/login` - Admin login
+- `POST /api/logout` - Admin logout
+
+### **CV Data**
 - `GET /api/cv` - Get CV data
-- `PUT /api/cv` - Update CV data (requires auth)
+- `PUT /api/cv` - Update CV data
+- `POST /api/upload` - Upload images
 
-### File Upload
-- `POST /api/upload/profile` - Upload profile image (requires auth)
-- `POST /api/upload/project` - Upload project image (requires auth)
+### **Health Check**
+- `GET /api/health` - Server status
 
-### Contact
-- `POST /api/contact` - Submit contact form
+## 🔒 Security
 
-## 🔒 Security Features
+### **Implemented Security Measures**
+- ✅ **Password Hashing** - bcrypt dengan salt rounds
+- ✅ **Rate Limiting** - 100 requests per 15 minutes
+- ✅ **CSP Headers** - Content Security Policy
+- ✅ **XSS Protection** - Input sanitization
+- ✅ **File Upload Validation** - Type dan size checking
+- ✅ **Environment Variables** - Sensitive data protection
 
-- JWT Authentication
-- Password hashing dengan bcrypt
-- Rate limiting
-- File upload validation
-- CORS protection
-- Helmet.js security headers
-
-## 🎨 Customization
-
-### Mengubah Tema
-Edit file `public/styles.css` untuk mengubah:
-- Warna utama
-- Font
-- Layout
-- Animasi
-
-### Menambah Section Baru
-1. Tambah HTML di `public/index.html`
-2. Tambah styling di `public/styles.css`
-3. Update JavaScript di `public/script.js`
-4. Update API di `server.js`
+### **Security Best Practices**
+- Ganti password default setelah deployment
+- Gunakan HTTPS di production
+- Regular security updates
+- Monitor server logs
+- Backup data secara berkala
 
 ## 🐛 Troubleshooting
 
-### Server tidak start
-- Pastikan port 3000 tidak digunakan
-- Cek Node.js version: `node --version`
-- Install ulang dependencies: `rm -rf node_modules && npm install`
+### **Common Issues**
 
-### Upload gambar gagal
-- Pastikan folder `public/uploads/` ada
-- Cek permission folder
-- Pastikan ukuran file < 5MB
+**1. Port Already in Use**
+```bash
+# Kill process on port 3001
+npx kill-port 3001
+# atau
+taskkill /f /im node.exe
+```
 
-### Login gagal
-- Cek file `data/users.json` ada
-- Reset password dengan hash baru
-- Cek JWT secret key
+**2. Permission Denied (Linux/Mac)**
+```bash
+chmod +x start.sh
+```
 
-## 📞 Support
+**3. Module Not Found**
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
 
-Jika ada masalah atau pertanyaan:
-1. Cek log server di terminal
-2. Cek browser console untuk error
-3. Pastikan semua dependencies terinstall
+**4. Database Connection Error**
+- Pastikan file `data/cv-data.json` dan `data/users.json` ada
+- Check file permissions
+
+## 🤝 Contributing
+
+1. Fork repository
+2. Create feature branch: `git checkout -b feature/amazing-feature`
+3. Commit changes: `git commit -m 'Add amazing feature'`
+4. Push to branch: `git push origin feature/amazing-feature`
+5. Open Pull Request
+
+## 📝 Changelog
+
+### **v1.0.0** (2025-09-17)
+- ✅ Initial release
+- ✅ Complete CV portfolio website
+- ✅ Admin panel functionality
+- ✅ Dynamic content editing
+- ✅ Social media integration
+- ✅ File upload system
+- ✅ Security features
+- ✅ Responsive design
 
 ## 📄 License
 
-MIT License - bebas digunakan untuk personal atau commercial.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🔄 Update Log
+## 👨‍💻 Author
 
-### v1.0.0
-- Initial release
-- Basic CV display
-- Admin edit functionality
-- File upload system
-- API backend
+**Reza Fadjar Nawawi**
+- GitHub: [@refanvanh](https://github.com/refanvanh)
+- LinkedIn: [Reza Fadjar Nawawi](https://linkedin.com/in/reza-fadjar-nawawi)
+- Email: refanvanh@gmail.com
+
+## 🙏 Acknowledgments
+
+- Font Awesome untuk icon library
+- Google Fonts untuk typography
+- Express.js community
+- Node.js community
 
 ---
 
-**Selamat menggunakan CV Portfolio Website! 🎉**
+**⭐ Jika project ini membantu Anda, jangan lupa berikan star di GitHub!**
