@@ -72,13 +72,22 @@ const DATA_DIR = 'data';
 const CV_DATA_FILE = path.join(DATA_DIR, 'cv-data.json');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
 
+// In-memory storage for Vercel (read-only file system)
+let inMemoryData = null;
+let inMemoryUsers = null;
+
+// Check if running on Vercel
+const isVercel = process.env.VERCEL === '1';
+
 // Ensure data directory exists
 async function ensureDataDir() {
   try {
-    await fs.mkdir(DATA_DIR, { recursive: true });
+    if (!isVercel) {
+      await fs.mkdir(DATA_DIR, { recursive: true });
+    }
     
     // Initialize CV data if not exists
-    if (!await fileExists(CV_DATA_FILE)) {
+    if (isVercel || !await fileExists(CV_DATA_FILE)) {
       const defaultCVData = {
         personal: {
           name: "John Doe",
@@ -178,11 +187,15 @@ async function ensureDataDir() {
         },
         lastUpdated: new Date().toISOString()
       };
-      await fs.writeFile(CV_DATA_FILE, JSON.stringify(defaultCVData, null, 2));
+      if (isVercel) {
+        inMemoryData = defaultCVData;
+      } else {
+        await fs.writeFile(CV_DATA_FILE, JSON.stringify(defaultCVData, null, 2));
+      }
     }
 
     // Initialize users if not exists
-    if (!await fileExists(USERS_FILE)) {
+    if (isVercel || !await fileExists(USERS_FILE)) {
       const hashedPassword = await bcrypt.hash('bnesindangpanon64', 10);
       const defaultUsers = [
         {
@@ -193,7 +206,11 @@ async function ensureDataDir() {
           createdAt: new Date().toISOString()
         }
       ];
-      await fs.writeFile(USERS_FILE, JSON.stringify(defaultUsers, null, 2));
+      if (isVercel) {
+        inMemoryUsers = defaultUsers;
+      } else {
+        await fs.writeFile(USERS_FILE, JSON.stringify(defaultUsers, null, 2));
+      }
     }
   } catch (error) {
     console.error('Error initializing data directory:', error);
@@ -207,6 +224,42 @@ async function fileExists(filePath) {
     return true;
   } catch {
     return false;
+  }
+}
+
+// Helper function to read CV data
+async function readCVData() {
+  if (isVercel) {
+    return inMemoryData;
+  } else {
+    return JSON.parse(await fs.readFile(CV_DATA_FILE, 'utf8'));
+  }
+}
+
+// Helper function to write CV data
+async function writeCVData(data) {
+  if (isVercel) {
+    inMemoryData = data;
+  } else {
+    await fs.writeFile(CV_DATA_FILE, JSON.stringify(data, null, 2));
+  }
+}
+
+// Helper function to read users data
+async function readUsersData() {
+  if (isVercel) {
+    return inMemoryUsers;
+  } else {
+    return JSON.parse(await fs.readFile(USERS_FILE, 'utf8'));
+  }
+}
+
+// Helper function to write users data
+async function writeUsersData(data) {
+  if (isVercel) {
+    inMemoryUsers = data;
+  } else {
+    await fs.writeFile(USERS_FILE, JSON.stringify(data, null, 2));
   }
 }
 
@@ -246,7 +299,7 @@ app.post('/api/login', async (req, res) => {
       return res.status(400).json({ error: 'Username and password required' });
     }
 
-    const users = JSON.parse(await fs.readFile(USERS_FILE, 'utf8'));
+    const users = await readUsersData();
     const user = users.find(u => u.username === username);
 
     if (!user) {
@@ -282,7 +335,7 @@ app.post('/api/login', async (req, res) => {
 // Get CV data
 app.get('/api/cv', async (req, res) => {
   try {
-    const cvData = JSON.parse(await fs.readFile(CV_DATA_FILE, 'utf8'));
+    const cvData = await readCVData();
     res.json(cvData);
   } catch (error) {
     console.error('Error reading CV data:', error);
@@ -296,7 +349,7 @@ app.put('/api/cv', authenticateToken, async (req, res) => {
     const updatedData = req.body;
     updatedData.lastUpdated = new Date().toISOString();
     
-    await fs.writeFile(CV_DATA_FILE, JSON.stringify(updatedData, null, 2));
+    await writeCVData(updatedData);
     res.json({ success: true, message: 'CV data updated successfully' });
   } catch (error) {
     console.error('Error updating CV data:', error);
@@ -314,11 +367,11 @@ app.post('/api/upload/profile', authenticateToken, upload.single('profileImage')
     const imageUrl = `/uploads/${req.file.filename}`;
     
     // Update CV data with new image URL
-    const cvData = JSON.parse(await fs.readFile(CV_DATA_FILE, 'utf8'));
+    const cvData = await readCVData();
     cvData.personal.profileImage = imageUrl;
     cvData.lastUpdated = new Date().toISOString();
     
-    await fs.writeFile(CV_DATA_FILE, JSON.stringify(cvData, null, 2));
+    await writeCVData(cvData);
     
     res.json({ 
       success: true, 
