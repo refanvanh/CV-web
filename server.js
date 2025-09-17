@@ -90,12 +90,12 @@ async function ensureDataDir() {
     if (isVercel || !await fileExists(CV_DATA_FILE)) {
       const defaultCVData = {
         personal: {
-          name: "John Doe",
-          title: "Full Stack Developer & UI/UX Designer",
-          description: "Saya seorang developer berpengalaman dengan passion untuk menciptakan solusi digital yang inovatif dan user-friendly.",
-          email: "john.doe@email.com",
-          phone: "+62 812-3456-7890",
-          location: "Jakarta, Indonesia",
+          name: "Reza Fadjar Nawawi",
+          title: "IT Engineer",
+          description: "Engineer berpengalaman dengan passion menciptakan solusi digital inovatif dan user-friendly, didukung kemampuan problem-solving kuat di bidang software maupun hardware.",
+          email: "rezafnaw@gmail.com",
+          phone: "+62 838-9048-5939",
+          location: "Bandung, Indonesia",
           profileImage: "/uploads/default-profile.jpg"
         },
         about: {
@@ -229,10 +229,19 @@ async function fileExists(filePath) {
 
 // Helper function to read CV data
 async function readCVData() {
-  if (isVercel) {
-    return inMemoryData;
-  } else {
-    return JSON.parse(await fs.readFile(CV_DATA_FILE, 'utf8'));
+  try {
+    if (isVercel) {
+      if (!inMemoryData) {
+        console.log('Initializing in-memory data for Vercel...');
+        await ensureDataDir();
+      }
+      return inMemoryData;
+    } else {
+      return JSON.parse(await fs.readFile(CV_DATA_FILE, 'utf8'));
+    }
+  } catch (error) {
+    console.error('Error in readCVData:', error);
+    throw error;
   }
 }
 
@@ -247,10 +256,19 @@ async function writeCVData(data) {
 
 // Helper function to read users data
 async function readUsersData() {
-  if (isVercel) {
-    return inMemoryUsers;
-  } else {
-    return JSON.parse(await fs.readFile(USERS_FILE, 'utf8'));
+  try {
+    if (isVercel) {
+      if (!inMemoryUsers) {
+        console.log('Initializing in-memory users for Vercel...');
+        await ensureDataDir();
+      }
+      return inMemoryUsers;
+    } else {
+      return JSON.parse(await fs.readFile(USERS_FILE, 'utf8'));
+    }
+  } catch (error) {
+    console.error('Error in readUsersData:', error);
+    throw error;
   }
 }
 
@@ -335,11 +353,17 @@ app.post('/api/login', async (req, res) => {
 // Get CV data
 app.get('/api/cv', async (req, res) => {
   try {
+    console.log('Getting CV data...');
     const cvData = await readCVData();
+    console.log('CV data retrieved successfully');
     res.json(cvData);
   } catch (error) {
     console.error('Error reading CV data:', error);
-    res.status(500).json({ error: 'Failed to load CV data' });
+    res.status(500).json({ 
+      error: 'Failed to load CV data',
+      details: error.message,
+      isVercel: isVercel
+    });
   }
 });
 
@@ -423,6 +447,46 @@ app.post('/api/contact', async (req, res) => {
   } catch (error) {
     console.error('Error processing contact form:', error);
     res.status(500).json({ error: 'Failed to send message' });
+  }
+});
+
+// Health check endpoint
+app.get('/api/health', async (req, res) => {
+  try {
+    const dataStatus = {
+      cvData: false,
+      users: false
+    };
+    
+    try {
+      const cvData = await readCVData();
+      dataStatus.cvData = !!cvData;
+    } catch (e) {
+      console.error('CV data check failed:', e.message);
+    }
+    
+    try {
+      const users = await readUsersData();
+      dataStatus.users = !!users;
+    } catch (e) {
+      console.error('Users data check failed:', e.message);
+    }
+    
+    res.json({ 
+      success: true, 
+      message: 'Server is running',
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime(),
+      isVercel: isVercel,
+      dataStatus: dataStatus
+    });
+  } catch (error) {
+    console.error('Health check error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Health check failed',
+      details: error.message
+    });
   }
 });
 
