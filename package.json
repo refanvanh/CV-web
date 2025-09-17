@@ -8,7 +8,8 @@
     "dev": "nodemon server.js",
     "build": "echo 'No build process needed for this project'",
     "deploy": "echo 'Ready for deployment'",
-    "setup": "npm install && mkdir data && mkdir public\\uploads"
+    "setup": "npm install && mkdir data && mkdir public\\uploads",
+    "vercel-build": "npm install"
   },
   "keywords": [
     "cv",
