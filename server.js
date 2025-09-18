@@ -141,12 +141,12 @@ function getDefaultCVData() {
       profileImage: "/uploads/default-profile.jpg"
     },
     about: {
-      text1: "Saya adalah seorang Full Stack Developer dengan pengalaman 5+ tahun dalam pengembangan aplikasi web dan mobile. Saya memiliki keahlian dalam berbagai teknologi modern dan selalu berusaha untuk belajar hal-hal baru.",
-      text2: "Passion saya adalah menciptakan solusi yang tidak hanya fungsional tetapi juga memberikan pengalaman pengguna yang luar biasa. Saya percaya bahwa teknologi yang baik adalah teknologi yang mudah digunakan oleh semua orang.",
+      text1: "Saya seorang IT Engineer dengan keahlian sebagai Full Stack Developer, Data Engineer, Hardware Engineer, dan Network Engineer, serta memiliki pengalaman profesional lebih dari 7 tahun di dunia teknologi. Berpengalaman dalam berbagai teknologi modern dan terus mengembangkan diri dengan mempelajari hal-hal baru.",
+      text2: "Passion saya adalah menciptakan solusi teknologi yang tidak hanya fungsional, tetapi juga menghadirkan pengalaman pengguna yang optimal. Saya percaya bahwa teknologi terbaik adalah teknologi yang sederhana, efektif, dan mudah digunakan oleh semua orang.",
       stats: [
-        { number: "5+", label: "Tahun Pengalaman" },
-        { number: "50+", label: "Proyek Selesai" },
-        { number: "30+", label: "Klien Puas" }
+        { number: "7+", label: "Tahun Pengalaman" },
+        { number: "4", label: "Proyek Selesai" },
+        { number: "3", label: "Klien Puas" }
       ]
     },
     experience: [
@@ -273,8 +273,10 @@ async function ensureDataDir() {
         const fileData = await fs.readFile(CV_DATA_FILE, 'utf8');
         inMemoryData = JSON.parse(fileData);
         console.log('Loaded CV data from file for Vercel');
+        console.log('About section loaded:', inMemoryData.about);
       } catch (error) {
         console.log('Could not load CV data from file, using default data');
+        console.log('Error:', error.message);
         inMemoryData = getDefaultCVData();
       }
       
@@ -457,6 +459,7 @@ app.get('/api/cv', async (req, res) => {
     console.log('Getting CV data...');
     const cvData = await readCVData();
     console.log('CV data retrieved successfully');
+    console.log('About section in response:', cvData.about);
     res.json(cvData);
   } catch (error) {
     console.error('Error reading CV data:', error);
