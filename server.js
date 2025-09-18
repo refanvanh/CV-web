@@ -128,6 +128,137 @@ let inMemoryUsers = null;
 // Check if running on Vercel
 const isVercel = process.env.VERCEL === '1';
 
+// Default data functions
+function getDefaultCVData() {
+  return {
+    personal: {
+      name: "Reza Fadjar Nawawi",
+      title: "IT Engineer",
+      description: "Engineer berpengalaman dengan passion menciptakan solusi digital inovatif dan user-friendly, didukung kemampuan problem-solving kuat di bidang software maupun hardware.",
+      email: "rezafnaw@gmail.com",
+      phone: "+62 838-9048-5939",
+      location: "Bandung, Indonesia",
+      profileImage: "/uploads/default-profile.jpg"
+    },
+    about: {
+      text1: "Saya adalah seorang Full Stack Developer dengan pengalaman 5+ tahun dalam pengembangan aplikasi web dan mobile. Saya memiliki keahlian dalam berbagai teknologi modern dan selalu berusaha untuk belajar hal-hal baru.",
+      text2: "Passion saya adalah menciptakan solusi yang tidak hanya fungsional tetapi juga memberikan pengalaman pengguna yang luar biasa. Saya percaya bahwa teknologi yang baik adalah teknologi yang mudah digunakan oleh semua orang.",
+      stats: [
+        { number: "5+", label: "Tahun Pengalaman" },
+        { number: "50+", label: "Proyek Selesai" },
+        { number: "30+", label: "Klien Puas" }
+      ]
+    },
+    experience: [
+      {
+        id: 1,
+        position: "Senior Full Stack Developer",
+        company: "Tech Solutions Inc.",
+        period: "2022 - Sekarang",
+        description: "Memimpin pengembangan aplikasi web skala besar menggunakan React, Node.js, dan AWS. Berhasil meningkatkan performa aplikasi sebesar 40% dan mengurangi bug production sebesar 60%."
+      },
+      {
+        id: 2,
+        position: "Full Stack Developer",
+        company: "Digital Agency Pro",
+        period: "2020 - 2022",
+        description: "Mengembangkan aplikasi web dan mobile untuk berbagai klien. Menggunakan teknologi seperti Vue.js, Laravel, dan React Native."
+      },
+      {
+        id: 3,
+        position: "Frontend Developer",
+        company: "Web Studio Creative",
+        period: "2019 - 2020",
+        description: "Fokus pada pengembangan antarmuka pengguna yang responsif dan modern. Menggunakan HTML5, CSS3, JavaScript, dan berbagai framework frontend."
+      }
+    ],
+    skills: {
+      frontend: {
+        name: "Frontend Development",
+        skills: [
+          { name: "React", level: 90 },
+          { name: "Vue.js", level: 85 },
+          { name: "JavaScript", level: 95 },
+          { name: "TypeScript", level: 80 },
+          { name: "HTML5", level: 95 },
+          { name: "CSS3", level: 90 }
+        ]
+      },
+      backend: {
+        name: "Backend Development",
+        skills: [
+          { name: "Node.js", level: 88 },
+          { name: "Python", level: 97 },
+          { name: "PHP", level: 70 },
+          { name: "MySQL", level: 85 },
+          { name: "MongoDB", level: 80 },
+          { name: "Express.js", level: 85 }
+        ]
+      },
+      tools: {
+        name: "Tools & Technologies",
+        skills: [
+          { name: "Git", level: 90 },
+          { name: "Docker", level: 84 },
+          { name: "AWS", level: 75 },
+          { name: "Google Cloud", level: 80 },
+          { name: "Figma", level: 70 },
+          { name: "Postman", level: 85 }
+        ]
+      }
+    },
+    projects: [
+      {
+        id: 1,
+        title: "E-Commerce Platform",
+        description: "Platform e-commerce lengkap dengan fitur payment gateway, inventory management, dan admin dashboard.",
+        technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+        image: "/uploads/project1.jpg",
+        liveUrl: "https://example.com",
+        githubUrl: "https://github.com/example/ecommerce"
+      },
+      {
+        id: 2,
+        title: "Task Management App",
+        description: "Aplikasi manajemen tugas dengan real-time collaboration dan notification system.",
+        technologies: ["Vue.js", "Express.js", "Socket.io", "PostgreSQL"],
+        image: "/uploads/project2.jpg",
+        liveUrl: "https://example.com",
+        githubUrl: "https://github.com/example/taskapp"
+      },
+      {
+        id: 3,
+        title: "Portfolio Website",
+        description: "Website portfolio responsif dengan CMS untuk mengelola konten secara dinamis.",
+        technologies: ["HTML5", "CSS3", "JavaScript", "Node.js"],
+        image: "/uploads/project3.jpg",
+        liveUrl: "https://raketers.com",
+        githubUrl: "https://github.com/example/portfolio"
+      }
+    ],
+    social: {
+      linkedin: "https://linkedin.com/in/rezafadjar",
+      github: "https://github.com/rezafadjar",
+      facebook: "https://facebook.com/rezafadjar",
+      instagram: "https://instagram.com/rezafadjar"
+    }
+  };
+}
+
+function getDefaultUsersData() {
+  return {
+    users: [
+      {
+        id: 1,
+        username: "refanvanh",
+        password: "$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi", // bnesindangpanon64
+        role: "admin",
+        createdAt: new Date().toISOString()
+      }
+    ]
+  };
+}
+
 // Ensure data directory exists
 async function ensureDataDir() {
   try {
@@ -135,107 +266,28 @@ async function ensureDataDir() {
       await fs.mkdir(DATA_DIR, { recursive: true });
     }
     
-    // Initialize CV data if not exists
-    if (isVercel || !await fileExists(CV_DATA_FILE)) {
-      const defaultCVData = {
-        personal: {
-          name: "Reza Fadjar Nawawi",
-          title: "IT Engineer",
-          description: "Engineer berpengalaman dengan passion menciptakan solusi digital inovatif dan user-friendly, didukung kemampuan problem-solving kuat di bidang software maupun hardware.",
-          email: "rezafnaw@gmail.com",
-          phone: "+62 838-9048-5939",
-          location: "Bandung, Indonesia",
-          profileImage: "/uploads/default-profile.jpg"
-        },
-        about: {
-          text1: "Saya adalah seorang Full Stack Developer dengan pengalaman 5+ tahun dalam pengembangan aplikasi web dan mobile. Saya memiliki keahlian dalam berbagai teknologi modern dan selalu berusaha untuk belajar hal-hal baru.",
-          text2: "Passion saya adalah menciptakan solusi yang tidak hanya fungsional tetapi juga memberikan pengalaman pengguna yang luar biasa. Saya percaya bahwa teknologi yang baik adalah teknologi yang mudah digunakan oleh semua orang.",
-          stats: [
-            { number: "5+", label: "Tahun Pengalaman" },
-            { number: "50+", label: "Proyek Selesai" },
-            { number: "30+", label: "Klien Puas" }
-          ]
-        },
-        experience: [
-          {
-            id: 1,
-            position: "Senior Full Stack Developer",
-            company: "Tech Solutions Inc.",
-            period: "2022 - Sekarang",
-            description: "Memimpin pengembangan aplikasi web skala besar menggunakan React, Node.js, dan AWS. Berhasil meningkatkan performa aplikasi sebesar 40% dan mengurangi bug production sebesar 60%."
-          },
-          {
-            id: 2,
-            position: "Full Stack Developer",
-            company: "Digital Agency Pro",
-            period: "2020 - 2022",
-            description: "Mengembangkan aplikasi web dan mobile untuk berbagai klien. Menggunakan teknologi seperti Vue.js, Laravel, dan React Native."
-          },
-          {
-            id: 3,
-            position: "Frontend Developer",
-            company: "Web Studio Creative",
-            period: "2019 - 2020",
-            description: "Fokus pada pengembangan antarmuka pengguna yang responsif dan modern. Menggunakan HTML5, CSS3, JavaScript, dan berbagai framework frontend."
-          }
-        ],
-        skills: {
-          frontend: [
-            { name: "React", level: 90 },
-            { name: "Vue.js", level: 85 },
-            { name: "JavaScript", level: 95 },
-            { name: "TypeScript", level: 80 }
-          ],
-          backend: [
-            { name: "Node.js", level: 88 },
-            { name: "Python", level: 75 },
-            { name: "PHP", level: 70 },
-            { name: "MySQL", level: 85 }
-          ],
-          tools: [
-            { name: "Git", level: 90 },
-            { name: "AWS", level: 75 },
-            { name: "Docker", level: 70 },
-            { name: "Figma", level: 85 }
-          ]
-        },
-        projects: [
-          {
-            id: 1,
-            name: "E-Commerce Platform",
-            description: "Aplikasi e-commerce lengkap dengan fitur payment gateway, manajemen inventory, dan dashboard admin.",
-            technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-            image: "/uploads/project1.jpg",
-            liveUrl: "#",
-            githubUrl: "#"
-          },
-          {
-            id: 2,
-            name: "Task Management App",
-            description: "Aplikasi manajemen tugas dengan real-time collaboration, drag & drop interface, dan notifikasi.",
-            technologies: ["Vue.js", "Socket.io", "Express", "PostgreSQL"],
-            image: "/uploads/project2.jpg",
-            liveUrl: "#",
-            githubUrl: "#"
-          },
-          {
-            id: 3,
-            name: "Weather Dashboard",
-            description: "Dashboard cuaca dengan prediksi 7 hari, peta interaktif, dan notifikasi cuaca ekstrem.",
-            technologies: ["React", "Chart.js", "OpenWeather API", "PWA"],
-            image: "/uploads/project3.jpg",
-            liveUrl: "#",
-            githubUrl: "#"
-          }
-        ],
-        social: {
-          linkedin: "#",
-          github: "#",
-          facebook: "#",
-          instagram: "#"
-        },
-        lastUpdated: new Date().toISOString()
-      };
+    // Load data from file if exists, otherwise use default
+    if (isVercel) {
+      // On Vercel, try to load from file first, then use default
+      try {
+        const fileData = await fs.readFile(CV_DATA_FILE, 'utf8');
+        inMemoryData = JSON.parse(fileData);
+        console.log('Loaded CV data from file for Vercel');
+      } catch (error) {
+        console.log('Could not load CV data from file, using default data');
+        inMemoryData = getDefaultCVData();
+      }
+      
+      try {
+        const usersData = await fs.readFile(USERS_FILE, 'utf8');
+        inMemoryUsers = JSON.parse(usersData);
+        console.log('Loaded users data from file for Vercel');
+      } catch (error) {
+        console.log('Could not load users data from file, using default data');
+        inMemoryUsers = getDefaultUsersData();
+      }
+    } else if (!await fileExists(CV_DATA_FILE)) {
+      const defaultCVData = getDefaultCVData();
       if (isVercel) {
         inMemoryData = defaultCVData;
       } else {
