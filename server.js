@@ -191,7 +191,6 @@ function getDefaultCVData() {
           { name: "Python", level: 97 },
           { name: "PHP", level: 70 },
           { name: "MySQL", level: 85 },
-          { name: "MongoDB", level: 80 },
           { name: "Express.js", level: 85 }
         ]
       },
@@ -202,8 +201,7 @@ function getDefaultCVData() {
           { name: "Docker", level: 84 },
           { name: "Google Cloud", level: 80 },
           { name: "Bash", level: 92 },
-          { name: "Firebase", level: 75 },
-          { name: "Postman", level: 85 }
+          { name: "Firebase", level: 85 }
         ]
       }
     },
