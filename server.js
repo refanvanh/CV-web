@@ -237,10 +237,10 @@ function getDefaultCVData() {
       }
     ],
     social: {
-      linkedin: "https://linkedin.com/in/rezafadjar",
-      github: "https://github.com/rezafadjar",
-      facebook: "https://facebook.com/rezafadjar",
-      instagram: "https://instagram.com/rezafadjar"
+      linkedin: "https://www.linkedin.com/in/reza-fadjar-nawawi",
+      github: "https://github.com/refanvanh/",
+      facebook: "https://www.facebook.com/rezafadjarnawawi",
+      instagram: "https://www.instagram.com/navaviinside/"
     }
   };
 }
