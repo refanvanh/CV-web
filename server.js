@@ -31,7 +31,8 @@ app.use(helmet({
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-app.use(express.static('public'));
+// Serve static files from public directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Serve index.html for root path
 app.get('/', (req, res) => {
@@ -46,6 +47,38 @@ app.get('/', (req, res) => {
       details: error.message,
       isVercel: isVercel
     });
+  }
+});
+
+// Serve static files explicitly
+app.get('/styles.css', (req, res) => {
+  try {
+    console.log('Serving styles.css');
+    res.sendFile(path.join(__dirname, 'public', 'styles.css'));
+  } catch (error) {
+    console.error('Error serving styles.css:', error);
+    res.status(404).send('CSS file not found');
+  }
+});
+
+app.get('/script.js', (req, res) => {
+  try {
+    console.log('Serving script.js');
+    res.sendFile(path.join(__dirname, 'public', 'script.js'));
+  } catch (error) {
+    console.error('Error serving script.js:', error);
+    res.status(404).send('JS file not found');
+  }
+});
+
+app.get('/uploads/:filename', (req, res) => {
+  try {
+    const filename = req.params.filename;
+    console.log('Serving upload file:', filename);
+    res.sendFile(path.join(__dirname, 'public', 'uploads', filename));
+  } catch (error) {
+    console.error('Error serving upload file:', error);
+    res.status(404).send('File not found');
   }
 });
 
