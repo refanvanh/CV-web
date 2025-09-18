@@ -30,6 +30,12 @@ async function initializeApp() {
         // Load CV data from server
         console.log('Loading CV data from server...');
         await loadCVDataFromServer();
+        
+        // Fallback: Ensure social media links are clickable even if data loading fails
+        setTimeout(() => {
+            ensureSocialLinksClickable();
+        }, 2000);
+        
         console.log('App initialized successfully');
         
         // Test edit button after initialization
@@ -868,6 +874,63 @@ async function saveCVDataToServer(cvData) {
     }
 }
 
+// Ensure social media links are clickable
+function ensureSocialLinksClickable() {
+    console.log('Ensuring social media links are clickable...');
+    const socialLinks = document.querySelectorAll('.social-link');
+    console.log('Found social links for fallback:', socialLinks.length);
+    
+    // Default social media URLs (fallback)
+    const defaultSocialUrls = {
+        linkedin: 'https://www.linkedin.com/in/reza-fadjar-nawawi',
+        github: 'https://github.com/refanvanh/',
+        facebook: 'https://www.facebook.com/rezafadjarnawawi',
+        instagram: 'https://www.instagram.com/navaviinside/'
+    };
+    
+    if (socialLinks.length >= 4) {
+        // Check if links are already set, if not set default ones
+        if (!socialLinks[0].href || socialLinks[0].href === '#') {
+            socialLinks[0].href = defaultSocialUrls.linkedin;
+            socialLinks[0].target = '_blank';
+            socialLinks[0].rel = 'noopener noreferrer';
+            console.log('Set fallback LinkedIn link:', socialLinks[0].href);
+        }
+        
+        if (!socialLinks[1].href || socialLinks[1].href === '#') {
+            socialLinks[1].href = defaultSocialUrls.github;
+            socialLinks[1].target = '_blank';
+            socialLinks[1].rel = 'noopener noreferrer';
+            console.log('Set fallback GitHub link:', socialLinks[1].href);
+        }
+        
+        if (!socialLinks[2].href || socialLinks[2].href === '#') {
+            socialLinks[2].href = defaultSocialUrls.facebook;
+            socialLinks[2].target = '_blank';
+            socialLinks[2].rel = 'noopener noreferrer';
+            console.log('Set fallback Facebook link:', socialLinks[2].href);
+        }
+        
+        if (!socialLinks[3].href || socialLinks[3].href === '#') {
+            socialLinks[3].href = defaultSocialUrls.instagram;
+            socialLinks[3].target = '_blank';
+            socialLinks[3].rel = 'noopener noreferrer';
+            console.log('Set fallback Instagram link:', socialLinks[3].href);
+        }
+        
+        // Ensure all links have proper attributes
+        socialLinks.forEach((link, index) => {
+            if (link.href && link.href !== '#') {
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                console.log(`Social link ${index} is ready:`, link.href);
+            }
+        });
+    } else {
+        console.error('Not enough social links found for fallback. Expected 4, found:', socialLinks.length);
+    }
+}
+
 // Update page content from server data
 function updatePageContentFromServer(cvData) {
     if (!cvData) return;
@@ -896,29 +959,40 @@ function updatePageContentFromServer(cvData) {
     
     // Update social media links
     if (cvData.social) {
+        console.log('Updating social media links:', cvData.social);
         const socialLinks = document.querySelectorAll('.social-link');
+        console.log('Found social links:', socialLinks.length);
+        
         if (socialLinks.length >= 4) {
             if (cvData.social.linkedin) {
                 socialLinks[0].href = cvData.social.linkedin;
                 socialLinks[0].target = '_blank';
                 socialLinks[0].rel = 'noopener noreferrer';
+                console.log('LinkedIn link updated:', socialLinks[0].href);
             }
             if (cvData.social.github) {
                 socialLinks[1].href = cvData.social.github;
                 socialLinks[1].target = '_blank';
                 socialLinks[1].rel = 'noopener noreferrer';
+                console.log('GitHub link updated:', socialLinks[1].href);
             }
             if (cvData.social.facebook) {
                 socialLinks[2].href = cvData.social.facebook;
                 socialLinks[2].target = '_blank';
                 socialLinks[2].rel = 'noopener noreferrer';
+                console.log('Facebook link updated:', socialLinks[2].href);
             }
             if (cvData.social.instagram) {
                 socialLinks[3].href = cvData.social.instagram;
                 socialLinks[3].target = '_blank';
                 socialLinks[3].rel = 'noopener noreferrer';
+                console.log('Instagram link updated:', socialLinks[3].href);
             }
+        } else {
+            console.error('Not enough social links found. Expected 4, found:', socialLinks.length);
         }
+    } else {
+        console.log('No social media data found in CV data');
     }
     
     // Update contact section
