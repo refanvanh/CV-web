@@ -146,30 +146,30 @@ function getDefaultCVData() {
       stats: [
         { number: "7+", label: "Tahun Pengalaman" },
         { number: "4", label: "Proyek Selesai" },
-        { number: "3", label: "Klien Puas" }
+        { number: "99+", label: "Klien Puas" }
       ]
     },
     experience: [
       {
         id: 1,
-        position: "Senior Full Stack Developer",
-        company: "Tech Solutions Inc.",
-        period: "2022 - Sekarang",
-        description: "Memimpin pengembangan aplikasi web skala besar menggunakan React, Node.js, dan AWS. Berhasil meningkatkan performa aplikasi sebesar 40% dan mengurangi bug production sebesar 60%."
+        position: "Full Stack Developer",
+        company: "Freelance",
+        period: "2025",
+        description: "Mengembangkan aplikasi web end-to-end mulai dari perancangan database, implementasi backend, hingga pengembangan antarmuka frontend. Berpengalaman dalam integrasi API, optimasi performa aplikasi, serta memastikan pengalaman pengguna yang responsif dan user-friendly."
       },
       {
         id: 2,
-        position: "Full Stack Developer",
-        company: "Digital Agency Pro",
-        period: "2020 - 2022",
-        description: "Mengembangkan aplikasi web dan mobile untuk berbagai klien. Menggunakan teknologi seperti Vue.js, Laravel, dan React Native."
+        position: "Data Engineer",
+        company: "PT Prosa Solusi Cerdas",
+        period: "2018 - 2025",
+        description: "Bertanggung jawab dalam merancang, mengelola, dan mengoptimalkan pipeline data untuk mendukung analisis dan pengembangan model AI. Berpengalaman dalam pengolahan data terstruktur maupun tidak terstruktur, serta kolaborasi lintas tim untuk memastikan ketersediaan data yang akurat, bersih, dan terintegrasi."
       },
       {
         id: 3,
-        position: "Frontend Developer",
-        company: "Web Studio Creative",
-        period: "2019 - 2020",
-        description: "Fokus pada pengembangan antarmuka pengguna yang responsif dan modern. Menggunakan HTML5, CSS3, JavaScript, dan berbagai framework frontend."
+        position: "Hardware and Network Engineer",
+        company: "Freelance",
+        period: "2015 - 2025",
+        description: "Menangani instalasi, konfigurasi, dan troubleshooting perangkat keras serta jaringan. Berpengalaman dalam perbaikan komputer/laptop, optimasi sistem, dan pengelolaan jaringan WiFi maupun LAN untuk memastikan kinerja perangkat dan konektivitas yang stabil."
       }
     ],
     skills: {
@@ -200,9 +200,9 @@ function getDefaultCVData() {
         skills: [
           { name: "Git", level: 90 },
           { name: "Docker", level: 84 },
-          { name: "AWS", level: 75 },
           { name: "Google Cloud", level: 80 },
-          { name: "Figma", level: 70 },
+          { name: "Bash", level: 92 },
+          { name: "Firebase", level: 75 },
           { name: "Postman", level: 85 }
         ]
       }
@@ -210,30 +210,30 @@ function getDefaultCVData() {
     projects: [
       {
         id: 1,
-        title: "E-Commerce Platform",
-        description: "Platform e-commerce lengkap dengan fitur payment gateway, inventory management, dan admin dashboard.",
-        technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-        image: "/uploads/project1.jpg",
-        liveUrl: "https://example.com",
-        githubUrl: "https://github.com/example/ecommerce"
+        name: "Platform Booking Mabar Badminton RaketerS",
+        description: "Membangun platform digital yang memudahkan pemain badminton dalam melakukan booking sesi main bersama (mabar). Proyek ini bertujuan untuk meningkatkan kemudahan koordinasi, keteraturan jadwal, dan pengalaman bermain yang lebih terorganisir bagi komunitas badminton.",
+        technologies: ["React", "TypeScript", "Node.js", "Express.js", "Google Sheets API", "Google Cloud Service Account", "Firebase Authentication", "ESLint", "Vercel", "Railway", "Docker"],
+        liveUrl: "https://raketers.com",
+        githubUrl: "https://github.com/refanvanh/bookingmabar-web",
+        image: "/uploads/project1.jpg"
       },
       {
         id: 2,
-        title: "Task Management App",
-        description: "Aplikasi manajemen tugas dengan real-time collaboration dan notification system.",
-        technologies: ["Vue.js", "Express.js", "Socket.io", "PostgreSQL"],
-        image: "/uploads/project2.jpg",
-        liveUrl: "https://example.com",
-        githubUrl: "https://github.com/example/taskapp"
+        name: "Toko Oleh-Oleh Khas Serang Chadel Food",
+        description: "Mengembangkan platform penjualan produk kuliner khas Serang dengan brand Chadel Food, yang berfokus pada penyediaan oleh-oleh lokal berkualitas. Proyek ini mendukung promosi UMKM daerah, memperluas distribusi produk, serta memberikan pengalaman belanja yang mudah dan modern bagi pelanggan.",
+        technologies: ["HTML5", "CSS3", "JavaScript"],
+        liveUrl: "https://chadelfood.github.io/chadelfood/",
+        githubUrl: "https://github.com/chadelfood/chadelfood",
+        image: "/uploads/project2.jpg"
       },
       {
         id: 3,
-        title: "Portfolio Website",
-        description: "Website portfolio responsif dengan CMS untuk mengelola konten secara dinamis.",
-        technologies: ["HTML5", "CSS3", "JavaScript", "Node.js"],
-        image: "/uploads/project3.jpg",
-        liveUrl: "https://raketers.com",
-        githubUrl: "https://github.com/example/portfolio"
+        name: "Absensi Karyawan",
+        description: "Membangun sistem absensi digital untuk mencatat kehadiran karyawan secara lebih efisien, akurat, dan mudah diakses. Proyek ini mendukung automasi proses administrasi, pelacakan jam kerja, serta penyusunan laporan kehadiran yang terintegrasi.",
+        technologies: ["HTML5", "CSS3", "Vanilla JavaScript", "Google Sheets API", "Google Apps Script", "Google Cloud Console"],
+        liveUrl: "https://refanvanh.github.io/presensi-web/",
+        githubUrl: "https://github.com/refanvanh/presensi-web",
+        image: "/uploads/project3.jpg"
       }
     ],
     social: {
