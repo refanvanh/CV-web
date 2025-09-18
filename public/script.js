@@ -219,20 +219,26 @@ function setupEventListeners() {
 
 // Setup smooth scrolling for navigation links
 function setupSmoothScrolling() {
+    // Only select navigation links that start with # (internal links)
     const navLinks = document.querySelectorAll('a[href^="#"]');
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            e.preventDefault();
             const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
             
-            if (targetSection) {
-                const offsetTop = targetSection.offsetTop - 70; // Account for fixed navbar
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
+            // Only process hash links (internal navigation), not external URLs
+            if (targetId && targetId.startsWith('#') && targetId.length > 1) {
+                e.preventDefault();
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    const offsetTop = targetSection.offsetTop - 70; // Account for fixed navbar
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
             }
+            // For external links (social media), let them open normally
         });
     });
 }
