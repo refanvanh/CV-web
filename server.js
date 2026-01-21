@@ -145,7 +145,7 @@ function getDefaultCVData() {
       text2: "Passion saya adalah menciptakan solusi teknologi yang tidak hanya fungsional, tetapi juga menghadirkan pengalaman pengguna yang optimal. Saya percaya bahwa teknologi terbaik adalah teknologi yang sederhana, efektif, dan mudah digunakan oleh semua orang.",
       stats: [
         { number: "7+", label: "Tahun Pengalaman" },
-        { number: "4", label: "Proyek Selesai" },
+        { number: "5", label: "Proyek Selesai" },
         { number: "99+", label: "Klien Puas" }
       ]
     },
@@ -217,21 +217,30 @@ function getDefaultCVData() {
       },
       {
         id: 2,
+        name: "My Pool App - Majalaya Waterpark",
+        description: "Mengembangkan aplikasi manajemen kolam renang terpadu untuk Majalaya Waterpark, waterpark terbesar di Majalaya. Aplikasi ini memudahkan pengelolaan fasilitas, pemesanan tiket online, manajemen harga promo, serta memberikan pengalaman pengguna yang optimal untuk meningkatkan kepuasan pengunjung.",
+        technologies: ["React", "TypeScript", "Vite", "Tailwind CSS", "Express.js", "Firebase", "Google Sheets API", "Lucide React"],
+        liveUrl: "https://www.majalayawaterpark.com/",
+        githubUrl: "https://github.com/refanvanh/my-pool-app",
+        image: "/uploads/project2.jpg"
+      },
+      {
+        id: 3,
         name: "Toko Oleh-Oleh Khas Serang Chadel Food",
         description: "Mengembangkan platform penjualan produk kuliner khas Serang dengan brand Chadel Food, yang berfokus pada penyediaan oleh-oleh lokal berkualitas. Proyek ini mendukung promosi UMKM daerah, memperluas distribusi produk, serta memberikan pengalaman belanja yang mudah dan modern bagi pelanggan.",
         technologies: ["HTML5", "CSS3", "JavaScript"],
         liveUrl: "https://chadelfood.github.io/chadelfood/",
         githubUrl: "https://github.com/chadelfood/chadelfood",
-        image: "/uploads/project2.jpg"
+        image: "/uploads/project3.jpg"
       },
       {
-        id: 3,
+        id: 4,
         name: "Absensi Karyawan",
         description: "Membangun sistem absensi digital untuk mencatat kehadiran karyawan secara lebih efisien, akurat, dan mudah diakses. Proyek ini mendukung automasi proses administrasi, pelacakan jam kerja, serta penyusunan laporan kehadiran yang terintegrasi.",
         technologies: ["HTML5", "CSS3", "Vanilla JavaScript", "Google Sheets API", "Google Apps Script", "Google Cloud Console"],
         liveUrl: "https://refanvanh.github.io/presensi-web/",
         githubUrl: "https://github.com/refanvanh/presensi-web",
-        image: "/uploads/project3.jpg"
+        image: "/uploads/project4.jpg"
       }
     ],
     social: {
