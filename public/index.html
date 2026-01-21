@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- html2canvas library for screenshot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- jsPDF library for PDF conversion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -22,6 +26,9 @@
                 <a href="#skills" class="nav-link">Keahlian</a>
                 <a href="#projects" class="nav-link">Proyek</a>
                 <a href="#contact" class="nav-link">Kontak</a>
+                <button class="download-btn" id="downloadButton" title="Download CV">
+                    <i class="fas fa-download"></i> Download
+                </button>
                 <button class="edit-btn" id="editButton">
                     <i class="fas fa-edit"></i> Edit
                 </button>
@@ -363,6 +370,38 @@
             <p>&copy; 2025 Reza Nawawi. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Download Modal -->
+    <div id="downloadModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeDownloadModal">&times;</span>
+            <h2>Download CV</h2>
+            <p>Pilih format download yang Anda inginkan:</p>
+            <div class="download-options">
+                <button class="btn btn-primary download-format-btn" data-format="pdf">
+                    <i class="fas fa-file-pdf"></i> Download sebagai PDF
+                </button>
+                <button class="btn btn-secondary download-format-btn" data-format="jpg">
+                    <i class="fas fa-image"></i> Download sebagai JPG
+                </button>
+            </div>
+            
+            <!-- JPG Quality Settings -->
+            <div id="jpgQualitySettings" class="jpg-quality-settings" style="display: none; margin-top: 20px;">
+                <label for="jpgQualitySlider">Kualitas JPG:</label>
+                <div class="quality-slider-container">
+                    <input type="range" id="jpgQualitySlider" min="50" max="100" value="92" class="quality-slider">
+                    <span id="qualityValue" class="quality-value">92%</span>
+                </div>
+                <p class="quality-note">Kualitas lebih tinggi = file lebih besar</p>
+            </div>
+            
+            <p class="download-note">
+                <i class="fas fa-info-circle"></i>
+                PDF cocok untuk dokumen profesional, JPG cocok untuk dibagikan di media sosial.
+            </p>
+        </div>
+    </div>
 
     <!-- Login Modal -->
     <div id="loginModal" class="modal">

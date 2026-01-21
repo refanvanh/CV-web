@@ -269,14 +269,20 @@ function getDefaultUsersData() {
 // Ensure data directory exists
 async function ensureDataDir() {
   try {
+    console.log('[DEBUG] ensureDataDir started, isVercel:', isVercel);
+    
     if (!isVercel) {
+      console.log('[DEBUG] Creating data directory...');
       await fs.mkdir(DATA_DIR, { recursive: true });
+      console.log('[DEBUG] Data directory created/verified');
     }
     
     // Load data from file if exists, otherwise use default
     if (isVercel) {
+      console.log('[DEBUG] Running on Vercel, loading in-memory data');
       // On Vercel, try to load from file first, then use default
       try {
+        console.log('[DEBUG] Trying to read CV data file...');
         const fileData = await fs.readFile(CV_DATA_FILE, 'utf8');
         inMemoryData = JSON.parse(fileData);
         console.log('Loaded CV data from file for Vercel');
@@ -288,6 +294,7 @@ async function ensureDataDir() {
       }
       
       try {
+        console.log('[DEBUG] Trying to read users data file...');
         const usersData = await fs.readFile(USERS_FILE, 'utf8');
         inMemoryUsers = JSON.parse(usersData);
         console.log('Loaded users data from file for Vercel');
@@ -295,17 +302,26 @@ async function ensureDataDir() {
         console.log('Could not load users data from file, using default data');
         inMemoryUsers = getDefaultUsersData();
       }
-    } else if (!await fileExists(CV_DATA_FILE)) {
-      const defaultCVData = getDefaultCVData();
-      if (isVercel) {
-        inMemoryData = defaultCVData;
+    } else {
+      console.log('[DEBUG] Not Vercel, checking if CV data file exists...');
+      if (!await fileExists(CV_DATA_FILE)) {
+        console.log('[DEBUG] CV data file does not exist, creating...');
+        const defaultCVData = getDefaultCVData();
+        if (isVercel) {
+          inMemoryData = defaultCVData;
+        } else {
+          await fs.writeFile(CV_DATA_FILE, JSON.stringify(defaultCVData, null, 2));
+          console.log('[DEBUG] CV data file created');
+        }
       } else {
-        await fs.writeFile(CV_DATA_FILE, JSON.stringify(defaultCVData, null, 2));
+        console.log('[DEBUG] CV data file exists');
       }
     }
 
     // Initialize users if not exists
+    console.log('[DEBUG] Checking users file...');
     if (isVercel || !await fileExists(USERS_FILE)) {
+      console.log('[DEBUG] Users file does not exist, creating...');
       const hashedPassword = await bcrypt.hash('bnesindangpanon64', 10);
       const defaultUsers = [
         {
@@ -320,8 +336,13 @@ async function ensureDataDir() {
         inMemoryUsers = defaultUsers;
       } else {
         await fs.writeFile(USERS_FILE, JSON.stringify(defaultUsers, null, 2));
+        console.log('[DEBUG] Users file created');
       }
+    } else {
+      console.log('[DEBUG] Users file exists');
     }
+    
+    console.log('[DEBUG] ensureDataDir completed successfully');
   } catch (error) {
     console.error('Error initializing data directory:', error);
   }
@@ -463,13 +484,16 @@ app.post('/api/login', async (req, res) => {
 // Get CV data
 app.get('/api/cv', async (req, res) => {
   try {
-    console.log('Getting CV data...');
+    console.log('[API] GET /api/cv - Reading CV data...');
     const cvData = await readCVData();
-    console.log('CV data retrieved successfully');
-    console.log('About section in response:', cvData.about);
+    console.log('[API] CV data read successfully, has keys:', Object.keys(cvData));
+    console.log('[API] Personal name:', cvData.personal?.name);
+    console.log('[API] Experiences count:', cvData.experience?.length);
+    console.log('[API] Projects count:', cvData.projects?.length);
     res.json(cvData);
+    console.log('[API] CV data sent to client');
   } catch (error) {
-    console.error('Error reading CV data:', error);
+    console.error('[API] Error reading CV data:', error);
     res.status(500).json({ 
       error: 'Failed to load CV data',
       details: error.message,
@@ -616,17 +640,26 @@ app.use((error, req, res, next) => {
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
-
 // Start server
-async function startServer() {
-  await ensureDataDir();
-  
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
-    console.log(`📁 Data directory: ${DATA_DIR}`);
-    console.log(`🔐 Admin credentials: Check ${USERS_FILE}`);
-    console.log(`📝 CV data file: ${CV_DATA_FILE}`);
+function startServer() {
+  // Don't wait for ensureDataDir, just call it and let it happen in background
+  ensureDataDir().catch(err => {
+    console.error('Data initialization error:', err);
   });
+  
+  // Listen immediately
+  try {
+    const server = app.listen(PORT, '0.0.0.0', () => {
+      console.log(`🚀 Server running on http://localhost:${PORT}`);
+      console.log(`📁 Data directory: ${DATA_DIR}`);
+    });
+    
+    server.on('error', (err) => {
+      console.error('Server error:', err);
+    });
+  } catch (err) {
+    console.error('Failed to start server:', err);
+  }
 }
 
-startServer().catch(console.error);
+startServer();

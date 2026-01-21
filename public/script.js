@@ -3,17 +3,29 @@ let isLoggedIn = false;
 let currentUser = null;
 const API_BASE_URL = window.location.origin + '/api';
 
-// DOM Content Loaded
-document.addEventListener('DOMContentLoaded', function() {
+// Initialize immediately or on DOMContentLoaded
+function startApp() {
+    console.log('[DEBUG] startApp called');
     initializeApp();
     setupEventListeners();
     setupSmoothScrolling();
     setupSkillBars();
-});
+}
+
+if (document.readyState === 'loading') {
+    // Document is still loading
+    console.log('[DEBUG] Document still loading, waiting for DOMContentLoaded');
+    document.addEventListener('DOMContentLoaded', startApp);
+} else {
+    // Document already loaded
+    console.log('[DEBUG] Document already loaded, calling startApp immediately');
+    startApp();
+}
 
 // Initialize the application
 async function initializeApp() {
     try {
+        console.log('[DEBUG] initializeApp started');
         // Check if user is already logged in (from localStorage)
         const savedLogin = localStorage.getItem('cvAdminLogin');
         if (savedLogin) {
@@ -26,7 +38,9 @@ async function initializeApp() {
         }
         
         // Load CV data from server
-        await loadCVDataFromServer();
+        console.log('[DEBUG] About to call loadCVDataFromServer');
+        const result = await loadCVDataFromServer();
+        console.log('[DEBUG] loadCVDataFromServer returned:', result);
         
         // Fallback: Ensure social media links are clickable even if data loading fails
         setTimeout(() => {
@@ -805,13 +819,25 @@ document.head.appendChild(style);
 // Load CV data from server
 async function loadCVDataFromServer() {
     try {
+        console.log('[DEBUG] Fetching CV data from:', API_BASE_URL + '/cv');
         const response = await fetch(`${API_BASE_URL}/cv`);
+        console.log('[DEBUG] Response status:', response.status, 'ok:', response.ok);
         if (response.ok) {
             const cvData = await response.json();
+            console.log('[DEBUG] CV Data received, keys:', Object.keys(cvData));
+            console.log('[DEBUG] Personal data:', cvData.personal);
+            console.log('[DEBUG] About data:', cvData.about);
+            console.log('[DEBUG] About stats:', cvData.about?.stats);
+            console.log('[DEBUG] Experiences:', cvData.experience?.length);
+            console.log('[DEBUG] Projects:', cvData.projects?.length);
+            console.log('[DEBUG] Calling updatePageContentFromServer...');
             updatePageContentFromServer(cvData);
+            console.log('[DEBUG] updatePageContentFromServer completed');
             return cvData;
         } else {
-            console.error('Failed to load CV data from server');
+            console.error('Failed to load CV data from server, status:', response.status);
+            const text = await response.text();
+            console.error('Response:', text.substring(0, 500));
             return null;
         }
     } catch (error) {
@@ -913,17 +939,29 @@ function ensureSocialLinksClickable() {
 
 // Update page content from server data
 function updatePageContentFromServer(cvData) {
-    if (!cvData) return;
+    console.log('[DEBUG] updatePageContentFromServer called with:', cvData);
+    if (!cvData) {
+        console.warn('[DEBUG] No cvData provided');
+        return;
+    }
     
+    console.log('[DEBUG] Processing personal info...');
     // Update hero section
     const heroName = document.getElementById('heroName');
     if (heroName && cvData.personal.name) {
+        console.log('[DEBUG] Updating heroName to:', cvData.personal.name);
         heroName.textContent = cvData.personal.name;
+    } else {
+        console.warn('[DEBUG] heroName element or cvData.personal.name missing');
     }
     
     const heroTitle = document.getElementById('heroTitle');
     if (heroTitle && cvData.personal.title) {
+        console.log('[DEBUG] Updating heroTitle from "' + heroTitle.textContent + '" to "' + cvData.personal.title + '"');
         heroTitle.textContent = cvData.personal.title;
+        console.log('[DEBUG] heroTitle after update:', document.getElementById('heroTitle').textContent);
+    } else {
+        console.warn('[DEBUG] Cannot update heroTitle', {elementFound: !!heroTitle, titleValue: cvData.personal?.title});
     }
     
     const heroDescription = document.getElementById('heroDescription');
@@ -1552,12 +1590,22 @@ function loadProjectsData(projects) {
 
 // Update experience section
 function updateExperienceSection(experiences) {
+    console.log('[DEBUG] updateExperienceSection called with:', experiences);
     const timeline = document.querySelector('.timeline');
-    if (!timeline || !experiences) return;
+    if (!timeline) {
+        console.warn('[DEBUG] .timeline not found');
+        return;
+    }
+    if (!experiences) {
+        console.warn('[DEBUG] No experiences provided');
+        return;
+    }
     
+    console.log('[DEBUG] Clearing timeline and adding', experiences.length, 'items');
     timeline.innerHTML = '';
     
     experiences.forEach((exp, index) => {
+        console.log('[DEBUG] Adding experience:', exp.position, 'at', exp.company);
         const timelineItem = document.createElement('div');
         timelineItem.className = 'timeline-item';
         timelineItem.innerHTML = `
@@ -1571,6 +1619,7 @@ function updateExperienceSection(experiences) {
         `;
         timeline.appendChild(timelineItem);
     });
+    console.log('[DEBUG] Experience section updated');
 }
 
 // Update skills section
@@ -1718,3 +1767,480 @@ openEditModal = function() {
     originalOpenEditModal();
     addLogoutButton();
 };
+// ==================== DOWNLOAD CV FEATURE ====================
+
+// Global variable for JPG quality
+let jpgQuality = 0.92;
+
+// Initialize download button and modal
+function initializeDownloadFeature() {
+    const downloadButton = document.getElementById('downloadButton');
+    const downloadModal = document.getElementById('downloadModal');
+    const closeDownloadModal = document.getElementById('closeDownloadModal');
+    const downloadFormatBtns = document.querySelectorAll('.download-format-btn');
+    const jpgQualitySlider = document.getElementById('jpgQualitySlider');
+    const jpgQualitySettings = document.getElementById('jpgQualitySettings');
+    const qualityValue = document.getElementById('qualityValue');
+
+    if (downloadButton) {
+        downloadButton.addEventListener('click', openDownloadModal);
+    }
+
+    if (closeDownloadModal) {
+        closeDownloadModal.addEventListener('click', closeDownloadModalFunc);
+    }
+
+    // Update JPG quality value display
+    if (jpgQualitySlider) {
+        jpgQualitySlider.addEventListener('input', function() {
+            const value = parseInt(this.value);
+            jpgQuality = value / 100;
+            if (qualityValue) {
+                qualityValue.textContent = value + '%';
+            }
+        });
+    }
+
+    downloadFormatBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const format = this.getAttribute('data-format');
+            
+            // Show JPG quality settings only for JPG format
+            if (jpgQualitySettings) {
+                if (format === 'jpg') {
+                    jpgQualitySettings.style.display = 'block';
+                } else {
+                    jpgQualitySettings.style.display = 'none';
+                }
+            }
+            
+            // Small delay to show settings before downloading
+            setTimeout(() => {
+                downloadCV(format);
+                closeDownloadModalFunc();
+            }, 100);
+        });
+    });
+
+    // Close modal when clicking outside
+    if (downloadModal) {
+        window.addEventListener('click', function(event) {
+            if (event.target === downloadModal) {
+                closeDownloadModalFunc();
+            }
+        });
+    }
+}
+
+function openDownloadModal() {
+    const downloadModal = document.getElementById('downloadModal');
+    if (downloadModal) {
+        downloadModal.style.display = 'block';
+    }
+}
+
+function closeDownloadModalFunc() {
+    const downloadModal = document.getElementById('downloadModal');
+    if (downloadModal) {
+        downloadModal.style.display = 'none';
+    }
+}
+
+// Convert image to base64 data URI
+async function imageToBase64(imageSrc) {
+    return new Promise((resolve) => {
+        if (!imageSrc || imageSrc.startsWith('data:')) {
+            // Already a data URI or empty
+            resolve(imageSrc);
+            return;
+        }
+
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        
+        img.onload = () => {
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                const dataUri = canvas.toDataURL('image/jpeg', 0.95);
+                console.log('[DEBUG] Converted image to base64:', imageSrc);
+                resolve(dataUri);
+            } catch (error) {
+                console.warn('[DEBUG] Failed to convert image to base64:', imageSrc, error);
+                resolve(imageSrc); // Return original if conversion fails
+            }
+        };
+
+        img.onerror = () => {
+            console.warn('[DEBUG] Failed to load image for base64 conversion:', imageSrc);
+            resolve(imageSrc); // Return original if load fails
+        };
+
+        // Handle both absolute URLs and relative paths
+        img.src = imageSrc.startsWith('http') ? imageSrc : window.location.origin + imageSrc;
+    });
+}
+
+// Convert all images on page to base64 before capture (with restoration info)
+async function convertImagesToBase64() {
+    const images = Array.from(document.querySelectorAll('img'));
+    console.log('[DEBUG] Converting', images.length, 'images to base64...');
+    
+    const imageBackups = []; // Store original srcs for restoration
+    
+    const promises = images.map(async (img, idx) => {
+        try {
+            const originalSrc = img.src;
+            imageBackups.push({ img, originalSrc });
+            
+            const base64 = await imageToBase64(originalSrc);
+            if (base64 !== originalSrc) {
+                img.src = base64;
+                console.log('[DEBUG] Image', idx, 'converted to base64');
+            }
+        } catch (error) {
+            console.warn('[DEBUG] Error converting image', idx, ':', error);
+        }
+    });
+
+    await Promise.all(promises);
+    console.log('[DEBUG] All images converted to base64');
+    
+    // Store backups globally for restoration after capture
+    window.__imageBackups = imageBackups;
+}
+
+// Restore all images to original src values
+function restoreImagesToOriginal() {
+    if (window.__imageBackups) {
+        window.__imageBackups.forEach(({ img, originalSrc }) => {
+            img.src = originalSrc;
+        });
+        console.log('[DEBUG] Restored', window.__imageBackups.length, 'images to original srcs');
+        delete window.__imageBackups;
+    }
+}
+
+// Wait for all images to load before capture
+async function waitForImagesToLoad() {
+    const images = document.querySelectorAll('img');
+    console.log('[DEBUG] Waiting for', images.length, 'images to load');
+    const promises = [];
+
+    images.forEach((img, idx) => {
+        console.log('[DEBUG] Image', idx, ':', img.src, '- complete:', img.complete, '- naturalHeight:', img.naturalHeight);
+        // If image is not loaded yet, wait for it
+        if (!img.complete) {
+            promises.push(
+                new Promise((resolve) => {
+                    const timeout = setTimeout(() => {
+                        console.warn('Image load timeout:', img.src);
+                        resolve();
+                    }, 10000); // 10 second timeout per image
+
+                    img.onload = () => {
+                        console.log('[DEBUG] Image loaded:', img.src);
+                        clearTimeout(timeout);
+                        resolve();
+                    };
+
+                    img.onerror = () => {
+                        console.warn('Image failed to load:', img.src);
+                        clearTimeout(timeout);
+                        resolve();
+                    };
+                })
+            );
+        }
+    });
+
+    // Wait for all images
+    if (promises.length > 0) {
+        console.log('[DEBUG] Waiting for', promises.length, 'images...');
+        await Promise.all(promises);
+        console.log('[DEBUG] All images loaded');
+    } else {
+        console.log('[DEBUG] All images already complete');
+    }
+}
+
+// Main download function
+async function downloadCV(format) {
+    try {
+        // Show loading message
+        showLoadingMessage('📸 Sedang mempersiapkan CV Anda...');
+        
+        // Get the main content
+        const cvContent = document.body;
+        const heroSection = document.querySelector('.hero');
+        const navbar = document.querySelector('.navbar');
+        
+        // Store original styles
+        const originalHeroHeight = heroSection ? heroSection.style.height : null;
+        const originalNavbarPosition = navbar ? navbar.style.position : null;
+        
+        // Optimize hero section height for better capture
+        if (heroSection) {
+            // Set to auto height to avoid 100vh stretching
+            heroSection.style.height = 'auto';
+            heroSection.style.minHeight = 'auto';
+        }
+        
+        // Move navbar to static to avoid fixed positioning in capture
+        if (navbar) {
+            navbar.style.position = 'static';
+        }
+        
+        // Hide elements that shouldn't be included (navbar buttons, modals, notifications, etc)
+        const elementsToHide = [
+            document.querySelector('.nav-menu'),
+            document.getElementById('loginModal'),
+            document.getElementById('editModal'),
+            document.getElementById('downloadModal'),
+            document.getElementById('notification-container'),
+            document.querySelector('.notification')
+        ];
+        
+        const originalDisplay = {};
+        elementsToHide.forEach((elem, index) => {
+            if (elem) {
+                originalDisplay[index] = elem.style.display;
+                elem.style.display = 'none';
+            }
+        });
+
+        // Update loading message
+        showLoadingMessage('⏳ Memproses gambar dan layout...');
+
+        // Wait for all images to load
+        await waitForImagesToLoad();
+
+        // Convert all images to base64 data URIs for better html2canvas compatibility
+        showLoadingMessage('🔄 Mengkonversi gambar...');
+        await convertImagesToBase64();
+
+        // Wait a bit more for layout recalculation
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // Hide loading message notification before capture
+        hideLoadingMessage();
+        
+        // Small delay to ensure UI updated
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        const canvas = await html2canvas(document.body, {
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            backgroundColor: '#ffffff',
+            windowHeight: document.documentElement.scrollHeight,
+            windowWidth: document.documentElement.scrollWidth,
+            allowTaint: true,
+            foreignObjectRendering: true,
+            removeContainer: true
+        });
+
+        // Restore images to original src values
+        restoreImagesToOriginal();
+
+        // Restore hidden elements
+        elementsToHide.forEach((elem, index) => {
+            if (elem) {
+                elem.style.display = originalDisplay[index];
+            }
+        });
+        
+        // Restore hero section height
+        if (heroSection) {
+            if (originalHeroHeight !== null) {
+                heroSection.style.height = originalHeroHeight;
+            } else {
+                heroSection.style.height = '';
+            }
+            heroSection.style.minHeight = '100vh';
+        }
+        
+        // Restore navbar position
+        if (navbar && originalNavbarPosition !== null) {
+            navbar.style.position = originalNavbarPosition;
+        } else if (navbar) {
+            navbar.style.position = 'fixed';
+        }
+
+        // Get the name for the filename
+        const nameElement = document.getElementById('heroName');
+        const cvName = nameElement ? nameElement.textContent.trim() : 'CV';
+        const fileName = `${cvName.replace(/\s+/g, '_')}`;
+        const timestamp = new Date().toLocaleDateString('id-ID').replace(/\//g, '-');
+
+        if (format === 'pdf') {
+            downloadAsPDF(canvas, fileName, timestamp);
+        } else if (format === 'jpg') {
+            downloadAsJPG(canvas, fileName, timestamp);
+        }
+
+        hideLoadingMessage();
+        showSuccessMessage(`CV berhasil didownload sebagai ${format.toUpperCase()}!`);
+    } catch (error) {
+        console.error('Error downloading CV:', error);
+        hideLoadingMessage();
+        showErrorMessage('Gagal mendownload CV. Silahkan coba lagi.');
+    }
+}
+
+// Download as PDF (converted from JPG)
+function downloadAsPDF(canvas, fileName, timestamp) {
+    try {
+        const { jsPDF } = window.jspdf;
+        
+        // Generate JPG from canvas first (high quality)
+        const jpgData = canvas.toDataURL('image/jpeg', 0.95);
+        
+        // A4 dimensions in mm
+        const pdfWidth = 210;
+        const pdfHeight = 297;
+        const imgWidth = pdfWidth;
+        
+        // Calculate image height based on canvas aspect ratio
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        
+        const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4'
+        });
+
+        // Calculate how many pages we need
+        const pageHeight = pdfHeight;
+        const totalPages = Math.ceil(imgHeight / pageHeight);
+        
+        console.log('[DEBUG] Canvas dimensions:', canvas.width, 'x', canvas.height);
+        console.log('[DEBUG] PDF image dimensions:', imgWidth, 'x', imgHeight, 'mm');
+        console.log('[DEBUG] Total pages needed:', totalPages);
+
+        // Add image split across multiple pages
+        for (let page = 0; page < totalPages; page++) {
+            if (page > 0) {
+                pdf.addPage();
+            }
+            
+            // Calculate Y offset for this page (negative value to show next section)
+            const yOffset = -pageHeight * page;
+            
+            // Add the JPG image with calculated offset
+            pdf.addImage(jpgData, 'JPEG', 0, yOffset, imgWidth, imgHeight);
+        }
+
+        // Save the PDF
+        pdf.save(`${fileName}_${timestamp}.pdf`);
+        console.log('[DEBUG] PDF downloaded successfully');
+    } catch (error) {
+        console.error('Error downloading PDF:', error);
+        throw error;
+    }
+}
+
+// Download as JPG
+function downloadAsJPG(canvas, fileName, timestamp) {
+    try {
+        // Use the selected quality from slider
+        const imageData = canvas.toDataURL('image/jpeg', jpgQuality);
+        
+        const link = document.createElement('a');
+        link.href = imageData;
+        link.download = `${fileName}_${timestamp}.jpg`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        console.log('[DEBUG] JPG downloaded successfully');
+    } catch (error) {
+        console.error('Error converting to JPG:', error);
+        // Fallback to lower quality if there's an error
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/jpeg', 0.85);
+        link.download = `${fileName}_${timestamp}.jpg`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+}
+
+// Show loading message
+function showLoadingMessage(message) {
+    let loadingDiv = document.getElementById('loadingMessage');
+    if (!loadingDiv) {
+        loadingDiv = document.createElement('div');
+        loadingDiv.id = 'loadingMessage';
+        loadingDiv.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            text-align: center;
+            font-size: 16px;
+            color: #333;
+        `;
+        document.body.appendChild(loadingDiv);
+    }
+    loadingDiv.textContent = message;
+    loadingDiv.style.display = 'block';
+}
+
+function hideLoadingMessage() {
+    const loadingDiv = document.getElementById('loadingMessage');
+    if (loadingDiv) {
+        loadingDiv.style.display = 'none';
+    }
+}
+
+// Show success message
+function showSuccessMessage(message) {
+    showNotificationMessage(message, 'success');
+}
+
+// Show error message
+function showErrorMessage(message) {
+    showNotificationMessage(message, 'error');
+}
+
+// Show notification message
+function showNotificationMessage(message, type) {
+    let notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 4px;
+        background: ${type === 'success' ? '#4caf50' : '#f44336'};
+        color: white;
+        z-index: 10000;
+        font-size: 14px;
+        animation: slideIn 0.3s ease;
+    `;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 3000);
+}
+
+// Call initialization when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        initializeDownloadFeature();
+    }, 100);
+});
