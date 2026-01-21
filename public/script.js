@@ -14,8 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // Initialize the application
 async function initializeApp() {
     try {
-        console.log('Initializing app...');
-        
         // Check if user is already logged in (from localStorage)
         const savedLogin = localStorage.getItem('cvAdminLogin');
         if (savedLogin) {
@@ -28,7 +26,6 @@ async function initializeApp() {
         }
         
         // Load CV data from server
-        console.log('Loading CV data from server...');
         await loadCVDataFromServer();
         
         // Fallback: Ensure social media links are clickable even if data loading fails
@@ -36,17 +33,6 @@ async function initializeApp() {
             ensureSocialLinksClickable();
         }, 2000);
         
-        console.log('App initialized successfully');
-        
-        // Test edit button after initialization
-        setTimeout(() => {
-            const editButton = document.getElementById('editButton');
-            if (editButton) {
-                console.log('Edit button test - element exists:', editButton);
-                console.log('Edit button test - computed style:', window.getComputedStyle(editButton));
-                console.log('Edit button test - pointer events:', window.getComputedStyle(editButton).pointerEvents);
-            }
-        }, 1000);
     } catch (error) {
         console.error('Error initializing app:', error);
         // Continue even if there's an error
@@ -58,19 +44,10 @@ function setupEventListeners() {
     // Edit button
     const editButton = document.getElementById('editButton');
     if (editButton) {
-        console.log('Edit button found:', editButton);
         editButton.addEventListener('click', function(e) {
-            console.log('Edit button clicked!');
             e.preventDefault();
             openLoginModal();
         });
-        console.log('Edit button event listener added');
-        
-        // Test if button is clickable
-        editButton.style.pointerEvents = 'auto';
-        editButton.style.cursor = 'pointer';
-    } else {
-        console.error('Edit button not found!');
     }
 
     // Close buttons
@@ -102,7 +79,6 @@ function setupEventListeners() {
     const addExperienceBtn = document.getElementById('addExperience');
     if (addExperienceBtn) {
         addExperienceBtn.addEventListener('click', addExperienceItem);
-        console.log('Add experience button event listener added');
     } else {
         console.error('Add experience button not found!');
     }
@@ -110,7 +86,6 @@ function setupEventListeners() {
     const addProjectBtn = document.getElementById('addProject');
     if (addProjectBtn) {
         addProjectBtn.addEventListener('click', addProjectItem);
-        console.log('Add project button event listener added');
     } else {
         console.error('Add project button not found!');
     }
@@ -119,7 +94,6 @@ function setupEventListeners() {
     const addSkillCategoryBtn = document.getElementById('addSkillCategory');
     if (addSkillCategoryBtn) {
         addSkillCategoryBtn.addEventListener('click', addSkillCategory);
-        console.log('Add skill category button event listener added');
     }
     
     // Add event listeners for skill category buttons
